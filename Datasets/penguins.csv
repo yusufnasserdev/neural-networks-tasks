@@ -7,10 +7,10 @@ Adelie,36.7,19.3,193,female,3450
 Adelie,39.3,20.6,190,male,3650
 Adelie,38.9,17.8,181,female,3625
 Adelie,39.2,19.6,195,male,4675
-Adelie,34.1,18.1,193,NA,3475
-Adelie,42,20.2,190,NA,4250
-Adelie,37.8,17.1,186,NA,3300
-Adelie,37.8,17.3,180,NA,3700
+Adelie,34.1,18.1,193,female,3475
+Adelie,42,20.2,190,female,4250
+Adelie,37.8,17.1,186,female,3300
+Adelie,37.8,17.3,180,female,3700
 Adelie,41.1,17.6,182,female,3200
 Adelie,38.6,21.2,191,male,3800
 Adelie,34.6,21.1,198,male,4400
@@ -46,7 +46,7 @@ Adelie,44.1,19.7,196,male,4400
 Adelie,37,16.9,185,female,3000
 Adelie,39.6,18.8,190,male,4600
 Adelie,41.1,19,182,male,3425
-Adelie,37.5,18.9,179,NA,2975
+Adelie,37.5,18.9,179,female,2975
 Adelie,36,17.9,190,female,3450
 Adelie,42.3,21.2,191,male,4150
 Gentoo,46.1,13.2,211,female,4500
@@ -75,7 +75,7 @@ Gentoo,46.5,14.5,213,female,4400
 Gentoo,46.3,15.8,215,male,5050
 Gentoo,42.9,13.1,215,female,5000
 Gentoo,46.1,15.1,215,male,5100
-Gentoo,44.5,14.3,216,NA,4100
+Gentoo,44.5,14.3,216,female,4100
 Gentoo,47.8,15,215,male,5650
 Gentoo,48.2,14.3,210,female,4600
 Gentoo,50,15.3,220,male,5550
