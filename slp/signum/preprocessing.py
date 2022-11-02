@@ -1,6 +1,6 @@
 import pandas as pd
 
-df = pd.read_csv('penguins.csv')
+df = pd.read_csv('datasets/penguins.csv')
 df=df.replace(to_replace="male",value=1)
 df=df.replace(to_replace="female",value=0)
 
