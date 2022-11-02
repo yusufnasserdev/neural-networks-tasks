@@ -166,5 +166,15 @@ bias = tk.IntVar()
 bias_check = tk.Checkbutton(window, variable=bias, font=12)
 bias_check.grid(column=2, row=30)
 
+
+def run(event):
+    pass
+
+
+# Run button
+run = tk.Button(window, text='Run',
+                font=("Roboto", 12), command=run, relief='raised', bg='#FFFFFF')
+run.grid(column=3, row=30)
+
 # Program main loop
 window.mainloop()
