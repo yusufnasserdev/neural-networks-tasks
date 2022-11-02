@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 
+import signum.Training
+
 # Creating tkinter window
 window = tk.Tk()
 window.title('Signum')
@@ -166,9 +168,39 @@ bias = tk.IntVar()
 bias_check = tk.Checkbutton(window, variable=bias, font=12)
 bias_check.grid(column=2, row=30)
 
+# End variables
+
+x1 = None
+x2 = None
+t = None
+w0 = None
+w1 = None
+w2 = None
+l_rate = None
+b = None
+
+
+def validate_epochs():
+    try:
+        epochs = int(epochs_no.get().strip())
+        return True
+    except ValueError:
+        return False
+
+
+def validate_rate():
+    try:
+        rate = float(learning_rate.get().strip())
+        return True
+    except ValueError:
+        return False
+
 
 def run(event):
-    pass
+    valid_epochs = validate_epochs()
+    valid_rate = validate_rate()
+    if valid_epochs and valid_rate:
+        signum.Training.training()
 
 
 # Run button
