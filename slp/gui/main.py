@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import tkinter.ttk as ttk
 
 import signum.Training
@@ -168,38 +169,49 @@ bias = tk.IntVar()
 bias_check = tk.Checkbutton(window, variable=bias, font=12)
 bias_check.grid(column=2, row=30)
 
-# End variables
-
-x1 = None
-x2 = None
-t = None
-w0 = None
-w1 = None
-w2 = None
-l_rate = None
-b = None
-
 
 def validate_epochs():
     try:
-        epochs = int(epochs_no.get().strip())
+        int(epochs_no.get().strip())
         return True
     except ValueError:
+        messagebox.showerror(title="Error", message="Please enter a valid epochs number")
         return False
 
 
 def validate_rate():
     try:
-        rate = float(learning_rate.get().strip())
+        float(learning_rate.get().strip())
         return True
     except ValueError:
+        messagebox.showerror(title="Error", message="Please enter a valid learning rate")
         return False
 
 
-def run(event):
-    valid_epochs = validate_epochs()
-    valid_rate = validate_rate()
-    if valid_epochs and valid_rate:
+def validate_classes():
+    if class1_cb.get() == " Class 1" or class2_cb.get() == " Class 2":
+        messagebox.showerror(title="Error", message="Please select both classes")
+        return False
+    return True
+
+
+def validate_features():
+    if feature1_cb.get() == " Feature 1" or feature2_cb.get() == " Feature 2":
+        messagebox.showerror(title="Error", message="Please select both features")
+        return False
+    return True
+
+
+def run():
+    valid_input = validate_epochs() and validate_features() and validate_classes() and validate_rate()
+
+    if valid_input:
+        c1 = class1_cb.get().strip()
+        c2 = class2_cb.get().strip()
+        f1 = feature1_cb.get().strip()
+        f2 = feature2_cb.get().strip()
+        epochs = int(epochs_no.get().strip())
+        rate = float(learning_rate.get().strip())
         signum.Training.training()
 
 
