@@ -5,8 +5,8 @@ def training(x1, x2, t, w0, w1, w2, l_rate, b):
     else:
         y_hat = -1
     w0_new = 0
-    if b:
+    if b == 1:
         w0_new = w0 + l_rate * (t - y_hat) * 1
     w1_new = w1 + l_rate * (t - y_hat) * x1
     w2_new = w2 + l_rate * (t - y_hat) * x2
-    return w0, w1_new, w2_new
+    return w0_new, w1_new, w2_new

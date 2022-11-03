@@ -6,11 +6,11 @@ df = df.replace(to_replace="female", value=0)
 
 
 def split(name):
-    if name == "c1":
+    if name == "Adelie":
         adelietrain = df[0:30]
         adelietest = df[30:50]
         return adelietrain, adelietest
-    elif name == "c2":
+    elif name == "Gentoo":
         gentootrain = df[50:80]
         gentootest = df[80:100]
         return gentootrain, gentootest
