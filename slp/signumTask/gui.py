@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
-
-import signum.Training
+from taskone import send_input
 
 # Creating tkinter window
 window = tk.Tk()
@@ -24,8 +23,8 @@ y = (hs / 2) - (h / 2)
 window.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
 # Features list
-features = [' bill_length', ' bill_depth',
-            ' flipper_length', ' gender', ' body_mass']
+features = [' bill_length_mm', ' bill_depth_mm',
+            ' flipper_length_mm', ' gender', ' body_mass_g']
 
 classes = [' Adelie', ' Gentoo', ' Chinstrap']
 
@@ -165,8 +164,8 @@ ttk.Label(window, text="Bias (if checked) :",
           font=("Roboto", 12)).grid(column=1, row=30, padx=10, pady=25)
 
 # Bias checkbox
-bias = tk.IntVar()
-bias_check = tk.Checkbutton(window, variable=bias, font=12)
+bs = tk.IntVar()
+bias_check = tk.Checkbutton(window, variable=bs, font=12)
 bias_check.grid(column=2, row=30)
 
 
@@ -212,7 +211,7 @@ def run():
         f2 = feature2_cb.get().strip()
         epochs = int(epochs_no.get().strip())
         rate = float(learning_rate.get().strip())
-        signum.Training.training()
+        send_input(c1, c2, f1, f2, epochs, rate, bs)
 
 
 # Run button
