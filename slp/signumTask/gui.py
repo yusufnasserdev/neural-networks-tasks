@@ -156,7 +156,7 @@ feature1_cb.bind("<<ComboboxSelected>>", f1_selected)
 
 # Feature 2 label
 ttk.Label(window, text="Select feature 2 :",
-          font=("Times New Roman", 12)).grid(column=0, row=10, padx=10, pady=25)
+          font=("Roboto", 12)).grid(column=0, row=10, padx=10, pady=25)
 
 f2_placeholder = tk.StringVar(value=' Feature 2')
 feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
