@@ -31,46 +31,110 @@ classes = [' Adelie', ' Gentoo', ' Chinstrap']
 
 # Feature 1 selected reaction
 def f1_selected(event):
-    selection = feature1_cb.get()
-    selection_index = feature1_cb.current()
+    # Getting both feature combo-boxes selections
+    selection1 = feature1_cb.get()
+    selection2 = feature2_cb.get()
+
+    # Setting feature1 combobox selection
     feature1_cb.set("")
-    feature1_cb.set(selection)
+    feature1_cb.set(selection1)
+
+    # Generating the new combobox values
     new_features = features.copy()
-    new_features.pop(selection_index)
+
+    try:
+        s2_index = new_features.index(selection2)
+        new_features.pop(s2_index)
+    except ValueError:
+        pass
+
+    s1_index = new_features.index(selection1)
+    new_features.pop(s1_index)
+
+    # Setting the new combobox values
+    feature1_cb['values'] = new_features
     feature2_cb['values'] = new_features
 
 
 # Feature 2 selected reaction
 def f2_selected(event):
-    selection = feature2_cb.get()
-    selection_index = feature2_cb.current()
+    # Getting both feature combo-boxes selections
+    selection1 = feature1_cb.get()
+    selection2 = feature2_cb.get()
+
+    # Setting feature2 combobox selection
     feature2_cb.set("")
-    feature2_cb.set(selection)
+    feature2_cb.set(selection2)
+
+    # Generating the new combobox values
     new_features = features.copy()
-    new_features.pop(selection_index)
+
+    try:
+        s1_index = new_features.index(selection1)
+        new_features.pop(s1_index)
+    except ValueError:
+        pass
+
+    s2_index = new_features.index(selection2)
+    new_features.pop(s2_index)
+
+    # Setting the new combobox values
     feature1_cb['values'] = new_features
+    feature2_cb['values'] = new_features
 
 
 # Class 1 selected reaction
 def c1_selected(event):
-    selection = class1_cb.get()
-    selection_index = class1_cb.current()
+    # Getting both feature combo-boxes selections
+    selection1 = class1_cb.get()
+    selection2 = class2_cb.get()
+
+    # Setting class1 combobox selection
     class1_cb.set("")
-    class1_cb.set(selection)
+    class1_cb.set(selection1)
+
+    # Generating the new combobox values
     new_classes = classes.copy()
-    new_classes.pop(selection_index)
+
+    try:
+        s2_index = new_classes.index(selection2)
+        new_classes.pop(s2_index)
+    except ValueError:
+        pass
+
+    s1_index = new_classes.index(selection1)
+    new_classes.pop(s1_index)
+
+    # Setting the new combobox values
+    class1_cb['values'] = new_classes
     class2_cb['values'] = new_classes
 
 
 # Class 2 selected reaction
 def c2_selected(event):
-    selection = class2_cb.get()
-    selection_index = class2_cb.current()
+    # Getting both feature combo-boxes selections
+    selection1 = class1_cb.get()
+    selection2 = class2_cb.get()
+
+    # Setting class2 combobox selection
     class2_cb.set("")
-    class2_cb.set(selection)
+    class2_cb.set(selection2)
+
+    # Generating the new combobox values
     new_classes = classes.copy()
-    new_classes.pop(selection_index)
+
+    try:
+        s1_index = new_classes.index(selection1)
+        new_classes.pop(s1_index)
+    except ValueError:
+        pass
+
+    s2_index = new_classes.index(selection2)
+    new_classes.pop(s2_index)
+
+    # Setting the new combobox values
     class1_cb['values'] = new_classes
+    class2_cb['values'] = new_classes
 
 
 # Feature 1 label
