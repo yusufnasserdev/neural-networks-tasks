@@ -37,7 +37,9 @@ def logic(class1, class2, x1, x2, ep, bs, L):
     # Testing phase to calculate accuracy
     for count in range(0, len(testing)):
         cnt += Testing.testing(testing[x1][count], testing[x2][count], testing['species'][count], w0, w1, w2)
-
+    print(w0)
+    print(w1)
+    print(w2)
     acc = cnt / len(testing)
     print(acc)
     visualization.visualize(train1, train2, x1, x2, w0, w1, w2)
