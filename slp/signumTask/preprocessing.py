@@ -1,8 +1,25 @@
 import pandas as pd
+import seaborn as sea
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('datasets/penguins.csv')
 df = df.replace(to_replace="male", value=1)
 df = df.replace(to_replace="female", value=0)
+"""
+sea.scatterplot(data=df,x=x1,y=x2,hue="species")
+plt.xlabel(x1)
+plt.ylabel(x2)
+"""
+def report():
+    for i in df:
+        for j in df:
+            if (i == j):
+                continue
+        sea.scatterplot(data=df, x=i,y = j, hue = "species")
+        plt.xlabel(i)
+        plt.ylabel(j)
+        plt.show()
+
 
 
 def split(name):
