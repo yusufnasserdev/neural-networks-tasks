@@ -8,7 +8,7 @@ from PIL import Image, ImageTk
 
 # Creating tkinter window
 window = tk.Tk()
-window.title('Signum')
+window.title('Task One')
 
 w = 930  # width for the Tk root
 h = 650  # height for the Tk root
@@ -32,124 +32,50 @@ features = [' bill_length_mm', ' bill_depth_mm',
 classes = [' Adelie', ' Gentoo', ' Chinstrap']
 
 
-# Feature 1 selected reaction
-def f1_selected(event):
+def combobox_listener(combo1, combo2, event, new_list):
     # Getting both feature combo-boxes selections
-    selection1 = feature1_cb.get()
-    selection2 = feature2_cb.get()
+    selection1 = combo1.get()
+    selection2 = combo2.get()
 
     # Setting feature1 combobox selection
-    feature1_cb.set("")
-    feature1_cb.set(selection1)
+    combo1.set("")
+    combo1.set(selection1)
 
     # Giving up the focus
     event.widget.master.focus_set()
 
-    # Generating the new combobox values
-    new_features = features.copy()
-
     try:
-        s2_index = new_features.index(selection2)
-        new_features.pop(s2_index)
+        s2_index = new_list.index(selection2)
+        new_list.pop(s2_index)
     except ValueError:
         pass
 
-    s1_index = new_features.index(selection1)
-    new_features.pop(s1_index)
+    s1_index = new_list.index(selection1)
+    new_list.pop(s1_index)
 
     # Setting the new combobox values
-    feature1_cb['values'] = new_features
-    feature2_cb['values'] = new_features
+    combo1['values'] = new_list
+    combo2['values'] = new_list
+
+
+# Feature 1 selected reaction
+def f1_selected(event):
+    combobox_listener(feature1_cb, feature2_cb, event, features.copy())
 
 
 # Feature 2 selected reaction
 def f2_selected(event):
-    # Getting both feature combo-boxes selections
-    selection1 = feature1_cb.get()
-    selection2 = feature2_cb.get()
-
-    # Setting feature2 combobox selection
-    feature2_cb.set("")
-    feature2_cb.set(selection2)
-
-    # Giving up the focus
-    event.widget.master.focus_set()
-
-    # Generating the new combobox values
-    new_features = features.copy()
-
-    try:
-        s1_index = new_features.index(selection1)
-        new_features.pop(s1_index)
-    except ValueError:
-        pass
-
-    s2_index = new_features.index(selection2)
-    new_features.pop(s2_index)
-
-    # Setting the new combobox values
-    feature1_cb['values'] = new_features
-    feature2_cb['values'] = new_features
+    combobox_listener(feature2_cb, feature1_cb, event, features.copy())
 
 
 # Class 1 selected reaction
 def c1_selected(event):
-    # Getting both feature combo-boxes selections
-    selection1 = class1_cb.get()
-    selection2 = class2_cb.get()
-
-    # Setting class1 combobox selection
-    class1_cb.set("")
-    class1_cb.set(selection1)
-
-    # Giving up the focus
-    event.widget.master.focus_set()
-
-    # Generating the new combobox values
-    new_classes = classes.copy()
-
-    try:
-        s2_index = new_classes.index(selection2)
-        new_classes.pop(s2_index)
-    except ValueError:
-        pass
-
-    s1_index = new_classes.index(selection1)
-    new_classes.pop(s1_index)
-
-    # Setting the new combobox values
-    class1_cb['values'] = new_classes
-    class2_cb['values'] = new_classes
+    combobox_listener(class1_cb, class2_cb, event, classes.copy())
 
 
 # Class 2 selected reaction
 def c2_selected(event):
-    # Getting both feature combo-boxes selections
-    selection1 = class1_cb.get()
-    selection2 = class2_cb.get()
-
-    # Setting class2 combobox selection
-    class2_cb.set("")
-    class2_cb.set(selection2)
-
-    # Giving up the focus
-    event.widget.master.focus_set()
-
-    # Generating the new combobox values
-    new_classes = classes.copy()
-
-    try:
-        s1_index = new_classes.index(selection1)
-        new_classes.pop(s1_index)
-    except ValueError:
-        pass
-
-    s2_index = new_classes.index(selection2)
-    new_classes.pop(s2_index)
-
-    # Setting the new combobox values
-    class1_cb['values'] = new_classes
-    class2_cb['values'] = new_classes
+    combobox_listener(class2_cb, class1_cb, event, classes.copy())
 
 
 # Feature 1 label

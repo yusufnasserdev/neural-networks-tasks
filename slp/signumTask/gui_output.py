@@ -29,8 +29,11 @@ def show_output(tp, tn, fp, fn, acc):
     ttk.Label(output_window, text="Accuracy :",
               font=("Roboto", 12)).grid(column=1, row=5, padx=10, pady=25)
 
+    acc *= 100
+    acc_txt = str(acc) + "0 %"
+
     # Accuracy number
-    ttk.Label(output_window, text=acc,
+    ttk.Label(output_window, text=acc_txt,
               font=("Roboto", 12)).grid(column=2, row=5, padx=10, pady=25)
 
     gimme_conf_mat(tp, tn, fp, fn)
