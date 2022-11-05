@@ -4,12 +4,7 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('datasets/penguins.csv')
 df = df.replace(to_replace="male", value=1)
-df = df.replace(to_replace="female", value=0)
-"""
-sea.scatterplot(data=df,x=x1,y=x2,hue="species")
-plt.xlabel(x1)
-plt.ylabel(x2)
-"""
+df = df.replace(to_replace="female", value=-1)
 
 features = ['bill_length_mm', 'bill_depth_mm',
             'flipper_length_mm', 'gender', 'body_mass_g']
