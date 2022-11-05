@@ -35,11 +35,27 @@ def logic(class1, class2, x1, x2, ep, bs, L):
             w0, w1, w2 = Training.training(training[x1][count], training[x2][count],
                                            training['species'][count], w0, w1, w2, L, bs)
     # Testing phase to calculate accuracy
+    truepostive = 0
+    falsepostive = 0
+    truenegtive = 0
+    falsenegtive = 0
     for count in range(0, len(testing)):
-        cnt += Testing.testing(testing[x1][count], testing[x2][count], testing['species'][count], w0, w1, w2)
+        target = testing['species'][count]
+        yhat = Testing.testing(testing[x1][count], testing[x2][count], target, w0, w1, w2)
+        if yhat == target:
+            cnt += 1
+        if yhat == 1 and target == 1:
+            truepostive += 1
+        elif yhat == 1 and target == -1:
+            falsepostive += 1
+        elif yhat == -1 and target == 1:
+            falsenegtive += 1
+        else:
+            truenegtive += 1
     print(w0)
     print(w1)
     print(w2)
     acc = cnt / len(testing)
+    #gui.show_output(truepostive, truenegtive, falsepostive, falsenegtive, acc)
     print(acc)
     visualization.visualize(train1, train2, x1, x2, w0, w1, w2)
