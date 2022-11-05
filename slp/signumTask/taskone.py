@@ -1,10 +1,6 @@
-from signumTask import mainlogic
+from mainlogic import logic
 
 
 def send_input(c1, c2, f1, f2, epochs, rate, bias):
     print(bias)
-    mainlogic.logic(c1,c2,f1,f2,epochs,bias,rate)
-
-
-
-
+    logic(c1, c2, f1, f2, epochs, bias, rate)
