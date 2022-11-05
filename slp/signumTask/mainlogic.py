@@ -61,3 +61,5 @@ def logic(class1, class2, x1, x2, ep, bs, L):
 
     visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
     show_output(tp, tn, fp, fn, acc)
+
+    return acc
