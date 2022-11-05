@@ -10,16 +10,18 @@ sea.scatterplot(data=df,x=x1,y=x2,hue="species")
 plt.xlabel(x1)
 plt.ylabel(x2)
 """
-def report():
-    for i in df:
-        for j in df:
-            if (i == j):
-                continue
-        sea.scatterplot(data=df, x=i,y = j, hue = "species")
-        plt.xlabel(i)
-        plt.ylabel(j)
-        plt.show()
 
+features = ['bill_length_mm', 'bill_depth_mm',
+            'flipper_length_mm', 'gender', 'body_mass_g']
+
+
+def report():
+    for i in range(0, 5):
+        for j in range(i + 1, 5):
+            sea.scatterplot(data=df, x=features[i], y=features[j], hue="species")
+            plt.xlabel(features[i])
+            plt.ylabel(features[j])
+            plt.show()
 
 
 def split(name):

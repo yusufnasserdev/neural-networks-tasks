@@ -4,4 +4,4 @@ def testing(x1, x2, t, w0, w1, w2):
         y_hat = 1
     else:
         y_hat = -1
-    return y_hat == t
+    return y_hat
