@@ -3,6 +3,8 @@ from tkinter import messagebox
 import tkinter.ttk as ttk
 from taskone import send_input
 from preprocessing import report
+from confusion_matrix import gimme_conf_mat
+from PIL import Image, ImageTk
 
 # Creating tkinter window
 window = tk.Tk()
@@ -40,6 +42,9 @@ def f1_selected(event):
     feature1_cb.set("")
     feature1_cb.set(selection1)
 
+    # Giving up the focus
+    event.widget.master.focus_set()
+
     # Generating the new combobox values
     new_features = features.copy()
 
@@ -66,6 +71,9 @@ def f2_selected(event):
     # Setting feature2 combobox selection
     feature2_cb.set("")
     feature2_cb.set(selection2)
+
+    # Giving up the focus
+    event.widget.master.focus_set()
 
     # Generating the new combobox values
     new_features = features.copy()
@@ -94,6 +102,9 @@ def c1_selected(event):
     class1_cb.set("")
     class1_cb.set(selection1)
 
+    # Giving up the focus
+    event.widget.master.focus_set()
+
     # Generating the new combobox values
     new_classes = classes.copy()
 
@@ -120,6 +131,9 @@ def c2_selected(event):
     # Setting class2 combobox selection
     class2_cb.set("")
     class2_cb.set(selection2)
+
+    # Giving up the focus
+    event.widget.master.focus_set()
 
     # Generating the new combobox values
     new_classes = classes.copy()
