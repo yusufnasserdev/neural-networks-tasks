@@ -1,10 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox
 import tkinter.ttk as ttk
-from taskone import send_input
+from tkinter import messagebox
+
 from preprocessing import report
-from confusion_matrix import gimme_conf_mat
-from PIL import Image, ImageTk
+from taskone import send_input
 
 # Creating tkinter window
 window = tk.Tk()
@@ -216,7 +215,7 @@ def run():
         f2 = feature2_cb.get().strip()
         epochs = int(epochs_no.get().strip())
         rate = float(learning_rate.get().strip())
-        report()
+        # report()
         send_input(c1, c2, f1, f2, epochs, rate, bs.get())
 
 
