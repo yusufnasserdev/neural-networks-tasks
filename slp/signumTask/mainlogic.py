@@ -1,4 +1,5 @@
 from signumTask import preprocessing, Training, Testing, visualization
+from gui_output import show_output
 import pandas as pd
 import random
 
@@ -56,6 +57,9 @@ def logic(class1, class2, x1, x2, ep, bs, L):
     print(w1)
     print(w2)
     acc = cnt / len(testing)
-    #gui.show_output(truepostive, truenegtive, falsepostive, falsenegtive, acc)
+
+    show_output(truepostive, truenegtive, falsepostive, falsenegtive, acc)
+
     print(acc)
     visualization.visualize(train1, train2, x1, x2, w0, w1, w2)
+

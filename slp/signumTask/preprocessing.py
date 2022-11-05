@@ -22,6 +22,8 @@ def report():
             plt.xlabel(features[i])
             plt.ylabel(features[j])
             plt.show()
+
+
 def split(name):
     if name == "Adelie":
         adelietrain = df[0:30]
