@@ -2,12 +2,19 @@ import pandas as pd
 import seaborn as sea
 import matplotlib.pyplot as plt
 
+features = ['bill_length_mm', 'bill_depth_mm',
+            'flipper_length_mm', 'gender', 'body_mass_g']
+
 df = pd.read_csv('datasets/penguins.csv')
 df = df.replace(to_replace="male", value=1)
 df = df.replace(to_replace="female", value=-1)
 
-features = ['bill_length_mm', 'bill_depth_mm',
-            'flipper_length_mm', 'gender', 'body_mass_g']
+sps = df['species'].tolist()
+df = df.drop('species', axis=1)
+
+# Normalization
+df = (df - df.mean()) / df.std()
+df.insert(0, 'species', sps)
 
 
 def report():

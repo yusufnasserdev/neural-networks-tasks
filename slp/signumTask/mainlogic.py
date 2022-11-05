@@ -36,12 +36,13 @@ def logic(class1, class2, x1, x2, ep, bs, L):
         for count in range(0, len(training)):
             w0, w1, w2 = Training.training(training[x1][count], training[x2][count],
                                            training['species'][count], w0, w1, w2, L, bs)
-    # Testing phase to calculate accuracy
+
     tp = 0
     fp = 0
     tn = 0
     fn = 0
 
+    # Testing phase to calculate accuracy
     for count in range(0, len(testing)):
         target = testing['species'][count]
         yhat = Testing.testing(testing[x1][count], testing[x2][count], target, w0, w1, w2)
@@ -58,5 +59,5 @@ def logic(class1, class2, x1, x2, ep, bs, L):
 
     acc = cnt / len(testing)
 
-    visualization.visualize(train1, train2, x1, x2, w0, w1, w2)
+    visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
     show_output(tp, tn, fp, fn, acc)
