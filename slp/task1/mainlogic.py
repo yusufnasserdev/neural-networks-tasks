@@ -1,11 +1,11 @@
-from signumTask import preprocessing, Training, Testing, visualization
+from task1 import preprocessing, Training, Testing, visualization
 from gui_output import show_output
 
 import pandas as pd
 import random
 
 
-def logic(class1, class2, x1, x2, ep, bs, L):
+def logic(class1, class2, x1, x2, ep, bs, rate):
     train1, test1 = preprocessing.split(class1)
     train2, test2 = preprocessing.split(class2)
     # to join train1 and train2 in one dataframe
@@ -35,7 +35,7 @@ def logic(class1, class2, x1, x2, ep, bs, L):
     for i in range(ep):
         for count in range(0, len(training)):
             w0, w1, w2 = Training.training(training[x1][count], training[x2][count],
-                                           training['species'][count], w0, w1, w2, L, bs)
+                                           training['species'][count], w0, w1, w2, rate, bs)
 
     tp = 0
     fp = 0
@@ -59,7 +59,7 @@ def logic(class1, class2, x1, x2, ep, bs, L):
 
     acc = cnt / len(testing)
 
-    visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
+    # visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
     show_output(tp, tn, fp, fn, acc)
 
     return acc
