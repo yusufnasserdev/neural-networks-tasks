@@ -1,5 +1,5 @@
-from mainlogic import logic
+from task1.gui import GUI
+
+gui = GUI(task=1)
 
 
-def send_input(c1, c2, f1, f2, epochs, rate, bias):
-    logic(c1, c2, f1, f2, epochs, bias, rate)

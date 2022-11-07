@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
-from confusion_matrix import gimme_conf_mat
+from utils import generate_conf_mat
 
 
 def show_output(tp, tn, fp, fn, acc):
@@ -36,7 +36,7 @@ def show_output(tp, tn, fp, fn, acc):
     ttk.Label(output_window, text=acc_txt,
               font=("Roboto", 12)).grid(column=2, row=5, padx=10, pady=25)
 
-    gimme_conf_mat(tp, tn, fp, fn)
+    generate_conf_mat(tp, tn, fp, fn)
 
     # Display confusion matrix image
     img = Image.open('conf_mat.png')

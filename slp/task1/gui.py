@@ -3,28 +3,10 @@ import tkinter.ttk as ttk
 from tkinter import messagebox
 
 from preprocessing import report
-from taskone import send_input
+from connector import send_input
 
-# Creating tkinter window
-window = tk.Tk()
-window.title('Task One')
+# Lists used in combo-boxes
 
-w = 930  # width for the Tk root
-h = 650  # height for the Tk root
-
-# get screen width and height
-ws = window.winfo_screenwidth()  # width of the screen
-hs = window.winfo_screenheight()  # height of the screen
-
-# calculate x and y coordinates for the Tk root window
-x = (ws / 2) - (w / 2)
-y = (hs / 2) - (h / 2)
-
-# set the dimensions of the screen
-# and where it is placed
-window.geometry('%dx%d+%d+%d' % (w, h, x, y))
-
-# Features list
 features = [' bill_length_mm', ' bill_depth_mm',
             ' flipper_length_mm', ' gender', ' body_mass_g']
 
@@ -57,172 +39,184 @@ def combobox_listener(combo1, combo2, event, new_list):
     combo2['values'] = new_list
 
 
-# Feature 1 selected reaction
-def f1_selected(event):
-    combobox_listener(feature1_cb, feature2_cb, event, features.copy())
+class GUI:
+    def __init__(self, task):
 
+        # Creating tkinter window
+        window = tk.Tk()
+        window.title('Task One')
 
-# Feature 2 selected reaction
-def f2_selected(event):
-    combobox_listener(feature2_cb, feature1_cb, event, features.copy())
+        w = 930  # width for the Tk root
+        h = 650  # height for the Tk root
 
+        # get screen width and height
+        width = window.winfo_screenwidth()  # width of the screen
+        height = window.winfo_screenheight()  # height of the screen
 
-# Class 1 selected reaction
-def c1_selected(event):
-    combobox_listener(class1_cb, class2_cb, event, classes.copy())
+        # calculate x and y coordinates for the Tk root window
+        x = (width / 2) - (w / 2)
+        y = (height / 2) - (h / 2)
 
+        # set the dimensions of the screen
+        # and where it is placed
+        window.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
-# Class 2 selected reaction
-def c2_selected(event):
-    combobox_listener(class2_cb, class1_cb, event, classes.copy())
+        # Feature 1 label
+        ttk.Label(window, text="Select feature 1 :",
+                  font=("Roboto", 12)).grid(column=0, row=5, padx=10, pady=25)
 
+        f1_placeholder = tk.StringVar(value=' Feature 1')
+        self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+                                        textvariable=f1_placeholder)
 
-# Feature 1 label
-ttk.Label(window, text="Select feature 1 :",
-          font=("Roboto", 12)).grid(column=0, row=5, padx=10, pady=25)
+        # Adding combobox drop down list
+        self.feature1_cb['values'] = features
 
-f1_placeholder = tk.StringVar(value=' Feature 1')
-feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
-                           textvariable=f1_placeholder)
+        self.feature1_cb.grid(column=1, row=5)
+        self.feature1_cb.current()
 
-# Adding combobox drop down list
-feature1_cb['values'] = features
+        # Setting the selection listener
+        self.feature1_cb.bind("<<ComboboxSelected>>", self.f1_selected)
 
-feature1_cb.grid(column=1, row=5)
-feature1_cb.current()
+        # Feature 2 label
+        ttk.Label(window, text="Select feature 2 :",
+                  font=("Roboto", 12)).grid(column=0, row=10, padx=10, pady=25)
 
-# Setting the selection listener
-feature1_cb.bind("<<ComboboxSelected>>", f1_selected)
+        f2_placeholder = tk.StringVar(value=' Feature 2')
+        self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+                                        textvariable=f2_placeholder)
 
-# Feature 2 label
-ttk.Label(window, text="Select feature 2 :",
-          font=("Roboto", 12)).grid(column=0, row=10, padx=10, pady=25)
+        # Adding combobox drop down list
+        self.feature2_cb['values'] = features
 
-f2_placeholder = tk.StringVar(value=' Feature 2')
-feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
-                           textvariable=f2_placeholder)
+        self.feature2_cb.grid(column=1, row=10)
+        self.feature2_cb.current()
 
-# Adding combobox drop down list
-feature2_cb['values'] = features
+        # Setting the selection listener
+        self.feature2_cb.bind("<<ComboboxSelected>>", self.f2_selected)
 
-feature2_cb.grid(column=1, row=10)
-feature2_cb.current()
+        # Class 1 label
+        ttk.Label(window, text="Select class 1 :",
+                  font=("Roboto", 12)).grid(column=2, row=5, padx=40, pady=25)
 
-# Setting the selection listener
-feature2_cb.bind("<<ComboboxSelected>>", f2_selected)
+        c1_placeholder = tk.StringVar(value=' Class 1')
+        self.class1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+                                      textvariable=c1_placeholder)
 
-# Class 1 label
-ttk.Label(window, text="Select class 1 :",
-          font=("Roboto", 12)).grid(column=2, row=5, padx=40, pady=25)
+        # Adding combobox drop down list
+        self.class1_cb['values'] = classes
 
-c1_placeholder = tk.StringVar(value=' Class 1')
-class1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
-                         textvariable=c1_placeholder)
+        self.class1_cb.grid(column=3, row=5)
+        self.class1_cb.current()
 
-# Adding combobox drop down list
-class1_cb['values'] = classes
+        # Setting the selection listener
+        self.class1_cb.bind("<<ComboboxSelected>>", self.c1_selected)
 
-class1_cb.grid(column=3, row=5)
-class1_cb.current()
+        # Class 2 label
+        ttk.Label(window, text="Select class 2 :",
+                  font=("Roboto", 12)).grid(column=2, row=10, padx=40, pady=25)
 
-# Setting the selection listener
-class1_cb.bind("<<ComboboxSelected>>", c1_selected)
+        c2_placeholder = tk.StringVar(value=' Class 2')
+        self.class2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+                                      textvariable=c2_placeholder)
 
-# Class 2 label
-ttk.Label(window, text="Select class 2 :",
-          font=("Roboto", 12)).grid(column=2, row=10, padx=40, pady=25)
+        # Adding combobox drop down list
+        self.class2_cb['values'] = classes
 
-c2_placeholder = tk.StringVar(value=' Class 2')
-class2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
-                         textvariable=c2_placeholder)
+        self.class2_cb.grid(column=3, row=10)
+        self.class2_cb.current()
 
-# Adding combobox drop down list
-class2_cb['values'] = classes
+        # Setting the selection listener
+        self.class2_cb.bind("<<ComboboxSelected>>", self.c2_selected)
 
-class2_cb.grid(column=3, row=10)
-class2_cb.current()
+        # Learning rate label
+        ttk.Label(window, text="Enter learning rate :",
+                  font=("Roboto", 12)).grid(column=1, row=15, padx=10, pady=25)
 
-# Setting the selection listener
-class2_cb.bind("<<ComboboxSelected>>", c2_selected)
+        # Learning rate entry
+        lr_placeholder = tk.StringVar(value=' Learning rate')
+        self.learning_rate = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=lr_placeholder)
+        self.learning_rate.grid(column=2, row=15)
 
-# Learning rate label
-ttk.Label(window, text="Enter learning rate :",
-          font=("Roboto", 12)).grid(column=1, row=15, padx=10, pady=25)
+        # Number of epochs label
+        ttk.Label(window, text="Number of epochs :",
+                  font=("Roboto", 12)).grid(column=1, row=20, padx=10, pady=25)
 
-# Learning rate entry
-lr_placeholder = tk.StringVar(value=' Learning rate')
-learning_rate = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=lr_placeholder)
-learning_rate.grid(column=2, row=15)
+        # Number of epochs entry
+        ne_placeholder = tk.StringVar(value=' # of epochs')
+        self.epochs_no = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=ne_placeholder)
+        self.epochs_no.grid(column=2, row=20)
 
-# Number of epochs label
-ttk.Label(window, text="Number of epochs :",
-          font=("Roboto", 12)).grid(column=1, row=20, padx=10, pady=25)
+        # Bias label
+        ttk.Label(window, text="Bias (if checked) :",
+                  font=("Roboto", 12)).grid(column=1, row=30, padx=10, pady=25)
 
-# Number of epochs entry
-ne_placeholder = tk.StringVar(value=' # of epochs')
-epochs_no = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=ne_placeholder)
-epochs_no.grid(column=2, row=20)
+        # Bias checkbox
+        self.bs = tk.IntVar()
+        bias_check = tk.Checkbutton(window, variable=self.bs, font=12)
+        bias_check.grid(column=2, row=30)
 
-# Bias label
-ttk.Label(window, text="Bias (if checked) :",
-          font=("Roboto", 12)).grid(column=1, row=30, padx=10, pady=25)
+        # Run button
+        run = tk.Button(window, text='Run',
+                        font=("Roboto", 12), command=self.run, relief='raised', bg='#FFFFFF')
+        run.grid(column=3, row=30)
 
-# Bias checkbox
-bs = tk.IntVar()
-bias_check = tk.Checkbutton(window, variable=bs, font=12)
-bias_check.grid(column=2, row=30)
+        # Program main loop
+        window.mainloop()
 
+    # Feature 1 selected reaction
+    def f1_selected(self, event):
+        combobox_listener(self.feature1_cb, self.feature2_cb, event, features.copy())
 
-def validate_epochs():
-    try:
-        int(epochs_no.get().strip())
+    # Feature 2 selected reaction
+    def f2_selected(self, event):
+        combobox_listener(self.feature2_cb, self.feature1_cb, event, features.copy())
+
+    # Class 1 selected reaction
+    def c1_selected(self, event):
+        combobox_listener(self.class1_cb, self.class2_cb, event, classes.copy())
+
+    # Class 2 selected reaction
+    def c2_selected(self, event):
+        combobox_listener(self.class2_cb, self.class1_cb, event, classes.copy())
+
+    def valid_epochs(self):
+        try:
+            int(self.epochs_no.get().strip())
+            return True
+        except ValueError:
+            messagebox.showerror(title="Error", message="Please enter a valid epochs number")
+            return False
+
+    def valid_rate(self):
+        try:
+            float(self.learning_rate.get().strip())
+            return True
+        except ValueError:
+            messagebox.showerror(title="Error", message="Please enter a valid learning rate")
+            return False
+
+    def valid_classes(self):
+        if self.class1_cb.get() == " Class 1" or self.class2_cb.get() == " Class 2":
+            messagebox.showerror(title="Error", message="Please select both classes")
+            return False
         return True
-    except ValueError:
-        messagebox.showerror(title="Error", message="Please enter a valid epochs number")
-        return False
 
-
-def validate_rate():
-    try:
-        float(learning_rate.get().strip())
+    def valid_features(self):
+        if self.feature1_cb.get() == " Feature 1" or self.feature2_cb.get() == " Feature 2":
+            messagebox.showerror(title="Error", message="Please select both features")
+            return False
         return True
-    except ValueError:
-        messagebox.showerror(title="Error", message="Please enter a valid learning rate")
-        return False
 
+    def valid_input(self):
+        return self.valid_features() and self.valid_classes() and self.valid_rate() and self.valid_epochs()
 
-def validate_classes():
-    if class1_cb.get() == " Class 1" or class2_cb.get() == " Class 2":
-        messagebox.showerror(title="Error", message="Please select both classes")
-        return False
-    return True
-
-
-def validate_features():
-    if feature1_cb.get() == " Feature 1" or feature2_cb.get() == " Feature 2":
-        messagebox.showerror(title="Error", message="Please select both features")
-        return False
-    return True
-
-
-def run():
-    valid_input = validate_epochs() and validate_features() and validate_classes() and validate_rate()
-
-    if valid_input:
-        c1 = class1_cb.get().strip()
-        c2 = class2_cb.get().strip()
-        f1 = feature1_cb.get().strip()
-        f2 = feature2_cb.get().strip()
-        epochs = int(epochs_no.get().strip())
-        rate = float(learning_rate.get().strip())
-        # report()
-        send_input(c1, c2, f1, f2, epochs, rate, bs.get())
-
-
-# Run button
-run = tk.Button(window, text='Run',
-                font=("Roboto", 12), command=run, relief='raised', bg='#FFFFFF')
-run.grid(column=3, row=30)
-
-# Program main loop
-window.mainloop()
+    def run(self):
+        if self.valid_input():
+            c1 = self.class1_cb.get().strip()
+            c2 = self.class2_cb.get().strip()
+            f1 = self.feature1_cb.get().strip()
+            f2 = self.feature2_cb.get().strip()
+            epochs = int(self.epochs_no.get().strip())
+            rate = float(self.learning_rate.get().strip())
+            send_input(c1, c2, f1, f2, epochs, self.bs.get(), rate)
