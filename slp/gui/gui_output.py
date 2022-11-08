@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
-from utils import generate_conf_mat
+from gui.utils import generate_conf_mat
 
 
 def show_output(tp, tn, fp, fn, acc):

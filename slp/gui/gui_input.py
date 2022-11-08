@@ -1,9 +1,9 @@
 import tkinter as tk
 import tkinter.ttk as ttk
+import tkinter.font as f
 from tkinter import messagebox
 
-from preprocessing import report
-from connector import send_input
+from gui.connector import input_adaline, input_perceptron
 
 # Lists used in combo-boxes
 
@@ -42,6 +42,8 @@ def combobox_listener(combo1, combo2, event, new_list):
 class GUI:
     def __init__(self, task):
 
+        self.task = task
+
         # Creating tkinter window
         window = tk.Tk()
         window.title('Task One')
@@ -61,12 +63,14 @@ class GUI:
         # and where it is placed
         window.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
+        m_font = f.Font(family="Calibri", size=13)
+
         # Feature 1 label
         ttk.Label(window, text="Select feature 1 :",
-                  font=("Roboto", 12)).grid(column=0, row=5, padx=10, pady=25)
+                  font=m_font).grid(column=0, row=5, padx=10, pady=25)
 
         f1_placeholder = tk.StringVar(value=' Feature 1')
-        self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+        self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
                                         textvariable=f1_placeholder)
 
         # Adding combobox drop down list
@@ -80,10 +84,10 @@ class GUI:
 
         # Feature 2 label
         ttk.Label(window, text="Select feature 2 :",
-                  font=("Roboto", 12)).grid(column=0, row=10, padx=10, pady=25)
+                  font=m_font).grid(column=0, row=10, padx=10, pady=25)
 
         f2_placeholder = tk.StringVar(value=' Feature 2')
-        self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+        self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
                                         textvariable=f2_placeholder)
 
         # Adding combobox drop down list
@@ -97,10 +101,10 @@ class GUI:
 
         # Class 1 label
         ttk.Label(window, text="Select class 1 :",
-                  font=("Roboto", 12)).grid(column=2, row=5, padx=40, pady=25)
+                  font=m_font).grid(column=2, row=5, padx=40, pady=25)
 
         c1_placeholder = tk.StringVar(value=' Class 1')
-        self.class1_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+        self.class1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
                                       textvariable=c1_placeholder)
 
         # Adding combobox drop down list
@@ -114,10 +118,10 @@ class GUI:
 
         # Class 2 label
         ttk.Label(window, text="Select class 2 :",
-                  font=("Roboto", 12)).grid(column=2, row=10, padx=40, pady=25)
+                  font=m_font).grid(column=2, row=10, padx=40, pady=25)
 
         c2_placeholder = tk.StringVar(value=' Class 2')
-        self.class2_cb = ttk.Combobox(window, width=25, state="readonly", font=("Roboto", 12),
+        self.class2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
                                       textvariable=c2_placeholder)
 
         # Adding combobox drop down list
@@ -131,35 +135,45 @@ class GUI:
 
         # Learning rate label
         ttk.Label(window, text="Enter learning rate :",
-                  font=("Roboto", 12)).grid(column=1, row=15, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=15, padx=10, pady=25)
 
         # Learning rate entry
         lr_placeholder = tk.StringVar(value=' Learning rate')
-        self.learning_rate = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=lr_placeholder)
+        self.learning_rate = tk.Entry(window, width=25, font=m_font, textvariable=lr_placeholder)
         self.learning_rate.grid(column=2, row=15)
 
         # Number of epochs label
         ttk.Label(window, text="Number of epochs :",
-                  font=("Roboto", 12)).grid(column=1, row=20, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=20, padx=10, pady=25)
 
         # Number of epochs entry
         ne_placeholder = tk.StringVar(value=' # of epochs')
-        self.epochs_no = tk.Entry(window, width=25, font=("Roboto", 12), textvariable=ne_placeholder)
+        self.epochs_no = tk.Entry(window, width=25, font=m_font, textvariable=ne_placeholder)
         self.epochs_no.grid(column=2, row=20)
 
         # Bias label
         ttk.Label(window, text="Bias (if checked) :",
-                  font=("Roboto", 12)).grid(column=1, row=30, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=30, padx=10, pady=25)
 
         # Bias checkbox
         self.bs = tk.IntVar()
         bias_check = tk.Checkbutton(window, variable=self.bs, font=12)
         bias_check.grid(column=2, row=30)
 
+        if task == 2:
+            # Learning rate label
+            ttk.Label(window, text="Enter MSE Threshold :",
+                      font=m_font).grid(column=1, row=35, padx=10, pady=25)
+
+            # Learning rate entry
+            mse_placeholder = tk.StringVar(value=' MSE Threshold')
+            self.mse_threshold = tk.Entry(window, width=25, font=m_font, textvariable=mse_placeholder)
+            self.mse_threshold.grid(column=2, row=35)
+
         # Run button
         run = tk.Button(window, text='Run',
-                        font=("Roboto", 12), command=self.run, relief='raised', bg='#FFFFFF')
-        run.grid(column=3, row=30)
+                        font=m_font, command=self.run, relief='raised', bg='#FFFFFF')
+        run.grid(column=3, row=40)
 
         # Program main loop
         window.mainloop()
@@ -208,8 +222,23 @@ class GUI:
             return False
         return True
 
+    def valid_mse(self):
+        if self.task != 2:
+            return True
+        else:
+            try:
+                float(self.mse_threshold.get().strip())
+                return True
+            except ValueError:
+                messagebox.showerror(title="Error", message="Please enter a valid MSE threshold")
+                return False
+
     def valid_input(self):
-        return self.valid_features() and self.valid_classes() and self.valid_rate() and self.valid_epochs()
+        return self.valid_features() and \
+               self.valid_classes() and \
+               self.valid_rate() and \
+               self.valid_epochs() and \
+               self.valid_mse()
 
     def run(self):
         if self.valid_input():
@@ -219,4 +248,9 @@ class GUI:
             f2 = self.feature2_cb.get().strip()
             epochs = int(self.epochs_no.get().strip())
             rate = float(self.learning_rate.get().strip())
-            send_input(c1, c2, f1, f2, epochs, self.bs.get(), rate)
+
+            if self.task == 1:
+                input_perceptron(c1, c2, f1, f2, epochs, self.bs.get(), rate)
+            elif self.task == 2:
+                mse = float(self.mse_threshold.get().strip())
+                input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
