@@ -1,4 +1,4 @@
-from task1.gui import GUI
+from gui.gui_input import GUI
 
 gui = GUI(task=1)
 
