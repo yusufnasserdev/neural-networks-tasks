@@ -5,19 +5,21 @@ import matplotlib.pyplot as plt
 features = ['bill_length_mm', 'bill_depth_mm',
             'flipper_length_mm', 'gender', 'body_mass_g']
 
-df = pd.read_csv('../datasets/penguins.csv')
-df = df.replace(to_replace="male", value=1)
-df = df.replace(to_replace="female", value=-1)
+def prepare_data():
+    df = pd.read_csv('../datasets/penguins.csv')
+    df = df.replace(to_replace="male", value=1)
+    df = df.replace(to_replace="female", value=-1)
 
-sps = df['species'].tolist()
-df = df.drop('species', axis=1)
+    sps = df['species'].tolist()
+    df = df.drop('species', axis=1)
 
-# Normalization
-df = (df - df.mean()) / df.std()
-df.insert(0, 'species', sps)
+    # Normalization
+    df = (df - df.mean()) / df.std()
+    df.insert(0, 'species', sps)
+    return df
 
 
-def report():
+def report(df):
     for i in range(0, 5):
         for j in range(i + 1, 5):
             sea.scatterplot(data=df, x=features[i], y=features[j], hue="species")
@@ -26,7 +28,8 @@ def report():
             plt.show()
 
 
-def split(name):
+def split(name,df):
+
     if name == "Adelie":
         adelietrain = df[0:30]
         adelietest = df[30:50]
