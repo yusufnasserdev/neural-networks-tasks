@@ -6,6 +6,7 @@ import random
 
 
 def training(x1, x2, t, w0, w1, w2, l_rate, b):
+
     res = w0 + x1 * w1 + x2 * w2
 
     # The hard limit transfer function forces a neuron to output a 1 if its net input reaches a threshold, otherwise
@@ -34,8 +35,9 @@ def testing(x1, x2, w0, w1, w2):
 
 
 def run(class1, class2, x1, x2, ep, bs, rate):
-    train1, test1 = preprocessing.split(class1)
-    train2, test2 = preprocessing.split(class2)
+    df=preprocessing.prepare_data()
+    train1, test1 = preprocessing.split(class1,df)
+    train2, test2 = preprocessing.split(class2,df)
     # to join train1 and train2 in one dataframe
     frames = [train1, train2]
     training_df = pd.concat(frames)
