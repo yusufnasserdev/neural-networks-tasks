@@ -46,7 +46,7 @@ class GUI:
 
         # Creating tkinter window
         window = tk.Tk()
-        window.title('Task One')
+        window.title('Task ' + str(self.task))
 
         w = 930  # width for the Tk root
         h = 650  # height for the Tk root
@@ -63,11 +63,11 @@ class GUI:
         # and where it is placed
         window.geometry('%dx%d+%d+%d' % (w, h, x, y))
 
-        m_font = f.Font(family="Calibri", size=13)
+        m_font = f.Font(family="Calibri", size=12)
 
         # Feature 1 label
         ttk.Label(window, text="Select feature 1 :",
-                  font=m_font).grid(column=0, row=5, padx=10, pady=25)
+                  font=m_font).grid(column=0, row=5, padx=40, pady=25)
 
         f1_placeholder = tk.StringVar(value=' Feature 1')
         self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
@@ -84,7 +84,7 @@ class GUI:
 
         # Feature 2 label
         ttk.Label(window, text="Select feature 2 :",
-                  font=m_font).grid(column=0, row=10, padx=10, pady=25)
+                  font=m_font).grid(column=0, row=10, padx=40, pady=25)
 
         f2_placeholder = tk.StringVar(value=' Feature 2')
         self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
@@ -161,11 +161,11 @@ class GUI:
         bias_check.grid(column=2, row=30)
 
         if task == 2:
-            # Learning rate label
+            # MSE threshold label
             ttk.Label(window, text="Enter MSE Threshold :",
                       font=m_font).grid(column=1, row=35, padx=10, pady=25)
 
-            # Learning rate entry
+            # MSE threshold entry
             mse_placeholder = tk.StringVar(value=' MSE Threshold')
             self.mse_threshold = tk.Entry(window, width=25, font=m_font, textvariable=mse_placeholder)
             self.mse_threshold.grid(column=2, row=35)
