@@ -1,28 +1,51 @@
-from task1 import preprocessing, Training, Testing, visualization
-from gui_output import show_output
+from task1 import preprocessing
+from gui.gui_output import show_output
 
 import pandas as pd
 import random
 
 
-def logic(class1, class2, x1, x2, ep, bs, rate):
+def training(x1, x2, t, w0, w1, w2, l_rate, b):
+    res = w0 + x1 * w1 + x2 * w2
+    if res >= 0:
+        y_hat = 1
+    else:
+        y_hat = -1
+    w0_new = 0
+    if b == 1:
+        w0_new = w0 + l_rate * (t - y_hat) * 1
+    w1_new = w1 + l_rate * (t - y_hat) * x1
+    w2_new = w2 + l_rate * (t - y_hat) * x2
+    return w0_new, w1_new, w2_new
+
+
+def testing(x1, x2, t, w0, w1, w2):
+    res = w0 + x1 * w1 + x2 * w2
+    if res >= 0:
+        y_hat = 1
+    else:
+        y_hat = -1
+    return y_hat
+
+
+def run(class1, class2, x1, x2, ep, bs, rate):
     train1, test1 = preprocessing.split(class1)
     train2, test2 = preprocessing.split(class2)
     # to join train1 and train2 in one dataframe
     frames = [train1, train2]
-    training = pd.concat(frames)
+    training_df = pd.concat(frames)
     # to shuffle training dataframe
-    training = training.sample(frac=1, random_state=1, ignore_index=True)
+    training_df = training_df.sample(frac=1, random_state=1, ignore_index=True)
     # to join test1 and test2 in one dataframe
     frames2 = [test1, test2]
-    testing = pd.concat(frames2)
+    testing_df = pd.concat(frames2)
     # to shuffle testing dataframe
-    testing = testing.sample(frac=1, random_state=1, ignore_index=True)
+    testing_df = testing_df.sample(frac=1, random_state=1, ignore_index=True)
     # to encode the class name (string) to 1 and -1
-    training = training.replace(to_replace=class1.strip(), value=1)
-    training = training.replace(to_replace=class2.strip(), value=-1)
-    testing = testing.replace(to_replace=class1.strip(), value=1)
-    testing = testing.replace(to_replace=class2.strip(), value=-1)
+    training_df = training_df.replace(to_replace=class1.strip(), value=1)
+    training_df = training_df.replace(to_replace=class2.strip(), value=-1)
+    testing_df = testing_df.replace(to_replace=class1.strip(), value=1)
+    testing_df = testing_df.replace(to_replace=class2.strip(), value=-1)
 
     w0 = 0
     # take random value between 0 and 1
@@ -33,9 +56,9 @@ def logic(class1, class2, x1, x2, ep, bs, rate):
     cnt = 0
     # Training phase
     for i in range(ep):
-        for count in range(0, len(training)):
-            w0, w1, w2 = Training.training(training[x1][count], training[x2][count],
-                                           training['species'][count], w0, w1, w2, rate, bs)
+        for count in range(0, len(training_df)):
+            w0, w1, w2 = training(training_df[x1][count], training_df[x2][count],
+                                           training_df['species'][count], w0, w1, w2, rate, bs)
 
     tp = 0
     fp = 0
@@ -43,9 +66,9 @@ def logic(class1, class2, x1, x2, ep, bs, rate):
     fn = 0
 
     # Testing phase to calculate accuracy
-    for count in range(0, len(testing)):
-        target = testing['species'][count]
-        yhat = Testing.testing(testing[x1][count], testing[x2][count], target, w0, w1, w2)
+    for count in range(0, len(testing_df)):
+        target = testing_df['species'][count]
+        yhat = testing(testing_df[x1][count], testing_df[x2][count], target, w0, w1, w2)
         if yhat == target:
             cnt += 1
         if yhat == 1 and target == 1:
@@ -57,7 +80,7 @@ def logic(class1, class2, x1, x2, ep, bs, rate):
         else:
             tn += 1
 
-    acc = cnt / len(testing)
+    acc = cnt / len(testing_df)
 
     # visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
     show_output(tp, tn, fp, fn, acc)

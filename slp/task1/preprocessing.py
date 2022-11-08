@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 features = ['bill_length_mm', 'bill_depth_mm',
             'flipper_length_mm', 'gender', 'body_mass_g']
 
-df = pd.read_csv('datasets/penguins.csv')
+df = pd.read_csv('../datasets/penguins.csv')
 df = df.replace(to_replace="male", value=1)
 df = df.replace(to_replace="female", value=-1)
 
