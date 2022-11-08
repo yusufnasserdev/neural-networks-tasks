@@ -7,6 +7,11 @@ import random
 
 def training(x1, x2, t, w0, w1, w2, l_rate, b):
     res = w0 + x1 * w1 + x2 * w2
+
+    # The hard limit transfer function forces a neuron to output a 1 if its net input reaches a threshold, otherwise
+    # it outputs 0. This allows a neuron to make a decision or classification. It can say yes or no. This kind of
+    # neuron is often trained with the perceptron learning rule.
+
     if res >= 0:
         y_hat = 1
     else:
@@ -19,7 +24,7 @@ def training(x1, x2, t, w0, w1, w2, l_rate, b):
     return w0_new, w1_new, w2_new
 
 
-def testing(x1, x2, t, w0, w1, w2):
+def testing(x1, x2, w0, w1, w2):
     res = w0 + x1 * w1 + x2 * w2
     if res >= 0:
         y_hat = 1
@@ -58,7 +63,7 @@ def run(class1, class2, x1, x2, ep, bs, rate):
     for i in range(ep):
         for count in range(0, len(training_df)):
             w0, w1, w2 = training(training_df[x1][count], training_df[x2][count],
-                                           training_df['species'][count], w0, w1, w2, rate, bs)
+                                  training_df['species'][count], w0, w1, w2, rate, bs)
 
     tp = 0
     fp = 0
@@ -68,7 +73,7 @@ def run(class1, class2, x1, x2, ep, bs, rate):
     # Testing phase to calculate accuracy
     for count in range(0, len(testing_df)):
         target = testing_df['species'][count]
-        yhat = testing(testing_df[x1][count], testing_df[x2][count], target, w0, w1, w2)
+        yhat = testing(testing_df[x1][count], testing_df[x2][count], w0, w1, w2)
         if yhat == target:
             cnt += 1
         if yhat == 1 and target == 1:
