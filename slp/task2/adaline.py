@@ -51,6 +51,8 @@ def run(class1, class2, x1, x2, ep, bs, rate, mse):
     testing_df = testing_df.replace(to_replace=class1.strip(), value=1)
     testing_df = testing_df.replace(to_replace=class2.strip(), value=-1)
 
+    # TODO: Double check the MSE operation
+
     w0 = 0
     # take random value between 0 and 1
     w1 = random.random()
