@@ -68,7 +68,7 @@ def run(class1, class2, x1, x2, ep, bs, rate, mse):
         err = 0
         for count in range(0, len(training_df)):
             err += calc_err(training_df[x1][count], training_df[x2][count], training_df['species'][count], w0, w1, w2)
-        err /= len(training_df)
+        err = (2 * len(training_df)) / err
         if err <= mse:
             break
 
