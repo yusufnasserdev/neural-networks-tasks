@@ -6,10 +6,9 @@ import pandas as pd
 import random
 from gui.gui_output import show_output
 
-
 def calc_err(x1, x2, t, w0, w1, w2):
     res = w0 + x1 * w1 + x2 * w2
-    return math.pow((t - res), 2)
+    return (t - res)*(t - res)
 
 
 def training(x1, x2, t, w0, w1, w2, l_rate, b):
@@ -51,8 +50,6 @@ def run(class1, class2, x1, x2, ep, bs, rate, mse):
     testing_df = testing_df.replace(to_replace=class1.strip(), value=1)
     testing_df = testing_df.replace(to_replace=class2.strip(), value=-1)
 
-    # TODO: Double check the MSE operation
-
     w0 = 0
     # take random value between 0 and 1
     w1 = random.random()
@@ -68,7 +65,7 @@ def run(class1, class2, x1, x2, ep, bs, rate, mse):
         err = 0
         for count in range(0, len(training_df)):
             err += calc_err(training_df[x1][count], training_df[x2][count], training_df['species'][count], w0, w1, w2)
-        err = (2 * len(training_df)) / err
+        err = err/(2*len(training_df))
         if err <= mse:
             break
 
