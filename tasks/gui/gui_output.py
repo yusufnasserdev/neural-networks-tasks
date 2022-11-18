@@ -7,11 +7,7 @@ from gui.utils import generate_conf_mat
 
 def show_output(tp, tn, fp, fn, acc):
 
-    # Debug
-    print(tp)
-    print(tn)
-    print(fp)
-    print(fn)
+
 
     # Creating tkinter window
     output_window = tk.Tk()
