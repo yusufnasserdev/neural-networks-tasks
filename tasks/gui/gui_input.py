@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.font as f
 from tkinter import messagebox
 
-from gui.connector import input_adaline, input_perceptron
+from gui.connector import input_adaline, input_perceptron, input_backpropagation
 
 # Lists used in combo-boxes
 
@@ -254,3 +254,6 @@ class GUI:
             elif self.task == 2:
                 mse = float(self.mse_threshold.get().strip())
                 input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
+            elif self.task == 3:
+                mse = float(self.mse_threshold.get().strip())
+                input_backpropagation(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)

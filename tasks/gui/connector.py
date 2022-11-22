@@ -1,10 +1,15 @@
 from task1 import perceptron
 from task2 import adaline
+from task3 import backpropagation
 
 
 def input_perceptron(c1, c2, f1, f2, epochs, bs, rate):
-    perceptron.run(c1, c2, f1, f2, epochs, bs, rate)
+    perceptron.run_perceptron(c1, c2, f1, f2, epochs, bs, rate)
 
 
 def input_adaline(c1, c2, f1, f2, epochs, bs, rate, mse):
-    adaline.run(c1, c2, f1, f2, epochs, bs, rate, mse)
+    adaline.run_adaline(c1, c2, f1, f2, epochs, bs, rate, mse)
+
+
+def input_backpropagation(c1, c2, f1, f2, epochs, bs, rate, mse):
+    backpropagation.run_backpropagation(c1, c2, f1, f2, epochs, bs, rate, mse)

@@ -2,13 +2,10 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
-from gui.utils import generate_conf_mat
+from utils.visualization import generate_conf_mat
 
 
 def show_output(tp, tn, fp, fn, acc):
-
-
-
     # Creating tkinter window
     output_window = tk.Tk()
     output_window.title('Output')
