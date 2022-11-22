@@ -1,14 +1,13 @@
-import math
-
-from task1 import visualization
-from task1.preprocessing import prepare_data, split
+from utils import visualization
+from utils.preprocessing import prepare_data, split
 import pandas as pd
 import random
 from gui.gui_output import show_output
 
+
 def calc_err(x1, x2, t, w0, w1, w2):
     res = w0 + x1 * w1 + x2 * w2
-    return (t - res)*(t - res)
+    return (t - res) * (t - res)
 
 
 def training(x1, x2, t, w0, w1, w2, l_rate, b):
@@ -30,7 +29,7 @@ def testing(x1, x2, w0, w1, w2):
     return y_hat
 
 
-def run(class1, class2, x1, x2, ep, bs, rate, mse):
+def run_adaline(class1, class2, x1, x2, ep, bs, rate, mse):
     df = prepare_data()
     train1, test1 = split(class1, df)
     train2, test2 = split(class2, df)
@@ -65,7 +64,7 @@ def run(class1, class2, x1, x2, ep, bs, rate, mse):
         err = 0
         for count in range(0, len(training_df)):
             err += calc_err(training_df[x1][count], training_df[x2][count], training_df['species'][count], w0, w1, w2)
-        err = err/(2*len(training_df))
+        err = err / (2 * len(training_df))
         if err <= mse:
             break
 
