@@ -65,73 +65,93 @@ class GUI:
 
         m_font = f.Font(family="Calibri", size=12)
 
-        # Feature 1 label
-        ttk.Label(window, text="Select feature 1 :",
-                  font=m_font).grid(column=0, row=5, padx=40, pady=25)
+        if self.task == 3:
+            # Number of hidden layers label
+            ttk.Label(window, text="Hidden Layers # :",
+                      font=m_font).grid(column=1, row=5, padx=10, pady=25)
 
-        f1_placeholder = tk.StringVar(value=' Feature 1')
-        self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
-                                        textvariable=f1_placeholder)
+            # Number of hidden layers entry
+            hl_placeholder = tk.StringVar(value=' # of hidden layers')
+            self.layers_no = tk.Entry(window, width=25, font=m_font, textvariable=hl_placeholder)
+            self.layers_no.grid(column=2, row=5)
 
-        # Adding combobox drop down list
-        self.feature1_cb['values'] = features
+            # Number of neurons label
+            ttk.Label(window, text="Neurons # :",
+                      font=m_font).grid(column=3, row=5, padx=10, pady=25)
 
-        self.feature1_cb.grid(column=1, row=5)
-        self.feature1_cb.current()
+            # Number of neurons in each hidden layer entry
+            neurons_placeholder = tk.StringVar(value=' # of neurons')
+            self.neurons_no = tk.Entry(window, width=25, font=m_font, textvariable=neurons_placeholder)
+            self.neurons_no.grid(column=4, row=5)
 
-        # Setting the selection listener
-        self.feature1_cb.bind("<<ComboboxSelected>>", self.f1_selected)
+        elif self.task == 1 or self.task == 2:
+            # Feature 1 label
+            ttk.Label(window, text="Select feature 1 :",
+                      font=m_font).grid(column=0, row=5, padx=40, pady=25)
 
-        # Feature 2 label
-        ttk.Label(window, text="Select feature 2 :",
-                  font=m_font).grid(column=0, row=10, padx=40, pady=25)
+            f1_placeholder = tk.StringVar(value=' Feature 1')
+            self.feature1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
+                                            textvariable=f1_placeholder)
 
-        f2_placeholder = tk.StringVar(value=' Feature 2')
-        self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
-                                        textvariable=f2_placeholder)
+            # Adding combobox drop down list
+            self.feature1_cb['values'] = features
 
-        # Adding combobox drop down list
-        self.feature2_cb['values'] = features
+            self.feature1_cb.grid(column=1, row=5)
+            self.feature1_cb.current()
 
-        self.feature2_cb.grid(column=1, row=10)
-        self.feature2_cb.current()
+            # Setting the selection listener
+            self.feature1_cb.bind("<<ComboboxSelected>>", self.f1_selected)
 
-        # Setting the selection listener
-        self.feature2_cb.bind("<<ComboboxSelected>>", self.f2_selected)
+            # Feature 2 label
+            ttk.Label(window, text="Select feature 2 :",
+                      font=m_font).grid(column=0, row=10, padx=40, pady=25)
 
-        # Class 1 label
-        ttk.Label(window, text="Select class 1 :",
-                  font=m_font).grid(column=2, row=5, padx=40, pady=25)
+            f2_placeholder = tk.StringVar(value=' Feature 2')
+            self.feature2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
+                                            textvariable=f2_placeholder)
 
-        c1_placeholder = tk.StringVar(value=' Class 1')
-        self.class1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
-                                      textvariable=c1_placeholder)
+            # Adding combobox drop down list
+            self.feature2_cb['values'] = features
 
-        # Adding combobox drop down list
-        self.class1_cb['values'] = classes
+            self.feature2_cb.grid(column=1, row=10)
+            self.feature2_cb.current()
 
-        self.class1_cb.grid(column=3, row=5)
-        self.class1_cb.current()
+            # Setting the selection listener
+            self.feature2_cb.bind("<<ComboboxSelected>>", self.f2_selected)
 
-        # Setting the selection listener
-        self.class1_cb.bind("<<ComboboxSelected>>", self.c1_selected)
+            # Class 1 label
+            ttk.Label(window, text="Select class 1 :",
+                      font=m_font).grid(column=2, row=5, padx=40, pady=25)
 
-        # Class 2 label
-        ttk.Label(window, text="Select class 2 :",
-                  font=m_font).grid(column=2, row=10, padx=40, pady=25)
+            c1_placeholder = tk.StringVar(value=' Class 1')
+            self.class1_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
+                                          textvariable=c1_placeholder)
 
-        c2_placeholder = tk.StringVar(value=' Class 2')
-        self.class2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
-                                      textvariable=c2_placeholder)
+            # Adding combobox drop down list
+            self.class1_cb['values'] = classes
 
-        # Adding combobox drop down list
-        self.class2_cb['values'] = classes
+            self.class1_cb.grid(column=3, row=5)
+            self.class1_cb.current()
 
-        self.class2_cb.grid(column=3, row=10)
-        self.class2_cb.current()
+            # Setting the selection listener
+            self.class1_cb.bind("<<ComboboxSelected>>", self.c1_selected)
 
-        # Setting the selection listener
-        self.class2_cb.bind("<<ComboboxSelected>>", self.c2_selected)
+            # Class 2 label
+            ttk.Label(window, text="Select class 2 :",
+                      font=m_font).grid(column=2, row=10, padx=40, pady=25)
+
+            c2_placeholder = tk.StringVar(value=' Class 2')
+            self.class2_cb = ttk.Combobox(window, width=25, state="readonly", font=m_font,
+                                          textvariable=c2_placeholder)
+
+            # Adding combobox drop down list
+            self.class2_cb['values'] = classes
+
+            self.class2_cb.grid(column=3, row=10)
+            self.class2_cb.current()
+
+            # Setting the selection listener
+            self.class2_cb.bind("<<ComboboxSelected>>", self.c2_selected)
 
         # Learning rate label
         ttk.Label(window, text="Enter learning rate :",
@@ -160,7 +180,7 @@ class GUI:
         bias_check = tk.Checkbutton(window, variable=self.bs, font=12)
         bias_check.grid(column=2, row=30)
 
-        if task == 2:
+        if self.task == 2:
             # MSE threshold label
             ttk.Label(window, text="Enter MSE Threshold :",
                       font=m_font).grid(column=1, row=35, padx=10, pady=25)
@@ -170,10 +190,20 @@ class GUI:
             self.mse_threshold = tk.Entry(window, width=25, font=m_font, textvariable=mse_placeholder)
             self.mse_threshold.grid(column=2, row=35)
 
+        if self.task == 3:
+            # Activation function label
+            ttk.Label(window, text="Activation Function :",
+                      font=m_font).grid(column=1, row=35, padx=10, pady=25)
+            self.active = tk.IntVar(value=1)
+            r1 = tk.Radiobutton(window, text="Sigmoid", value=1, variable=self.active)
+            r1.grid(column=2, row=35)
+            r2 = tk.Radiobutton(window, text="Hyperbolic", value=2, variable=self.active)
+            r2.grid(column=3, row=35)
+
         # Run button
         run = tk.Button(window, text='Run',
                         font=m_font, command=self.run, relief='raised', bg='#FFFFFF')
-        run.grid(column=3, row=40)
+        run.grid(column=4, row=40)
 
         # Program main loop
         window.mainloop()
@@ -211,34 +241,60 @@ class GUI:
             return False
 
     def valid_classes(self):
-        if self.class1_cb.get() == " Class 1" or self.class2_cb.get() == " Class 2":
-            messagebox.showerror(title="Error", message="Please select both classes")
-            return False
+        if self.task == 1 or self.task == 2:
+            if self.class1_cb.get() == " Class 1" or self.class2_cb.get() == " Class 2":
+                messagebox.showerror(title="Error", message="Please select both classes")
+                return False
         return True
 
     def valid_features(self):
-        if self.feature1_cb.get() == " Feature 1" or self.feature2_cb.get() == " Feature 2":
-            messagebox.showerror(title="Error", message="Please select both features")
-            return False
+        if self.task == 1 or self.task == 2:
+            if self.feature1_cb.get() == " Feature 1" or self.feature2_cb.get() == " Feature 2":
+                messagebox.showerror(title="Error", message="Please select both features")
+                return False
         return True
 
     def valid_mse(self):
         if self.task != 2:
             return True
-        else:
-            try:
-                float(self.mse_threshold.get().strip())
-                return True
-            except ValueError:
-                messagebox.showerror(title="Error", message="Please enter a valid MSE threshold")
-                return False
+
+        try:
+            float(self.mse_threshold.get().strip())
+            return True
+        except ValueError:
+            messagebox.showerror(title="Error", message="Please enter a valid MSE threshold")
+            return False
+
+    def valid_neurons(self):
+        if self.task != 3:
+            return True
+
+        try:
+            int(self.neurons_no.get().strip())
+            return True
+        except ValueError:
+            messagebox.showerror(title="Error", message="Please enter a valid neurons number")
+            return False
+
+    def valid_layers(self):
+        if self.task != 3:
+            return True
+
+        try:
+            int(self.layers_no.get().strip())
+            return True
+        except ValueError:
+            messagebox.showerror(title="Error", message="Please enter a valid layers number")
+            return False
 
     def valid_input(self):
         return self.valid_features() and \
                self.valid_classes() and \
                self.valid_rate() and \
                self.valid_epochs() and \
-               self.valid_mse()
+               self.valid_mse() and \
+               self.valid_neurons() and \
+               self.valid_layers()
 
     def run(self):
         if self.valid_input():
@@ -255,5 +311,6 @@ class GUI:
                 mse = float(self.mse_threshold.get().strip())
                 input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
             elif self.task == 3:
-                mse = float(self.mse_threshold.get().strip())
-                input_backpropagation(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
+                layers = int(self.epochs_no.get().strip())
+                neurons = int(self.epochs_no.get().strip())
+                input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
