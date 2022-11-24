@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from Forward import *
+"""
 
 df_train = pd.read_csv('penguins.csv')
 
@@ -30,3 +31,7 @@ x7,x8 = forward(x6, x6.shape[0], x6.shape[1], 6)
 
 print(x7.shape)
 print(x8.shape)
+
+"""
+
+
