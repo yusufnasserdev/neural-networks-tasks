@@ -1,7 +1,10 @@
+from gui.gui_input import GUI
 
 import pandas as pd
 import numpy as np
 from Forward import *
+
+# gui = GUI(task=3)
 
 df_train = pd.read_csv('penguins.csv')
 

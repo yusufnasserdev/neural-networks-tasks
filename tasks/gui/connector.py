@@ -11,5 +11,5 @@ def input_adaline(c1, c2, f1, f2, epochs, bs, rate, mse):
     adaline.run_adaline(c1, c2, f1, f2, epochs, bs, rate, mse)
 
 
-def input_backpropagation(c1, c2, f1, f2, epochs, bs, rate, mse):
-    backpropagation.run_backpropagation(c1, c2, f1, f2, epochs, bs, rate, mse)
+def input_backpropagation(layers, neurons, epochs, active, bias, rate):
+    backpropagation.run_backpropagation(layers, neurons, epochs, active, bias, rate)
