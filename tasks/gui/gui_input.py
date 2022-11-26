@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.font as f
 from tkinter import messagebox
 
-from gui.connector import input_adaline, input_perceptron, input_backpropagation
+from gui.connector import input_adaline, input_perceptron  # , input_backpropagation
 
 # Lists used in combo-boxes
 
@@ -68,7 +68,7 @@ class GUI:
         if self.task == 3:
             # Number of hidden layers label
             ttk.Label(window, text="Hidden Layers # :",
-                      font=m_font).grid(column=1, row=5, padx=10, pady=25)
+                      font=m_font).grid(column=1, row=5, padx=40, pady=25)
 
             # Number of hidden layers entry
             hl_placeholder = tk.StringVar(value=' # of hidden layers')
@@ -77,7 +77,7 @@ class GUI:
 
             # Number of neurons label
             ttk.Label(window, text="Neurons # :",
-                      font=m_font).grid(column=3, row=5, padx=10, pady=25)
+                      font=m_font).grid(column=3, row=5, padx=40, pady=25)
 
             # Number of neurons in each hidden layer entry
             neurons_placeholder = tk.StringVar(value=' # of neurons')
@@ -155,7 +155,7 @@ class GUI:
 
         # Learning rate label
         ttk.Label(window, text="Enter learning rate :",
-                  font=m_font).grid(column=1, row=15, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=15, padx=40, pady=25)
 
         # Learning rate entry
         lr_placeholder = tk.StringVar(value=' Learning rate')
@@ -164,7 +164,7 @@ class GUI:
 
         # Number of epochs label
         ttk.Label(window, text="Number of epochs :",
-                  font=m_font).grid(column=1, row=20, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=20, padx=40, pady=25)
 
         # Number of epochs entry
         ne_placeholder = tk.StringVar(value=' # of epochs')
@@ -173,7 +173,7 @@ class GUI:
 
         # Bias label
         ttk.Label(window, text="Bias (if checked) :",
-                  font=m_font).grid(column=1, row=30, padx=10, pady=25)
+                  font=m_font).grid(column=1, row=30, padx=40, pady=25)
 
         # Bias checkbox
         self.bs = tk.IntVar()
@@ -183,7 +183,7 @@ class GUI:
         if self.task == 2:
             # MSE threshold label
             ttk.Label(window, text="Enter MSE Threshold :",
-                      font=m_font).grid(column=1, row=35, padx=10, pady=25)
+                      font=m_font).grid(column=1, row=35, padx=40, pady=25)
 
             # MSE threshold entry
             mse_placeholder = tk.StringVar(value=' MSE Threshold')
@@ -193,7 +193,7 @@ class GUI:
         if self.task == 3:
             # Activation function label
             ttk.Label(window, text="Activation Function :",
-                      font=m_font).grid(column=1, row=35, padx=10, pady=25)
+                      font=m_font).grid(column=1, row=35, padx=40, pady=25)
             self.active = tk.IntVar(value=1)
             r1 = tk.Radiobutton(window, text="Sigmoid", value=1, variable=self.active)
             r1.grid(column=2, row=35)
@@ -259,8 +259,7 @@ class GUI:
             return True
 
         try:
-            float(self.mse_threshold.get().strip())
-            return True
+            return float(self.mse_threshold.get().strip()) > 0
         except ValueError:
             messagebox.showerror(title="Error", message="Please enter a valid MSE threshold")
             return False
@@ -270,10 +269,16 @@ class GUI:
             return True
 
         try:
-            int(self.neurons_no.get().strip())
-            return True
+            neurons_list = self.neurons_no.get().split(',')
+            for neuron in neurons_list:
+                try:
+                    return int(neuron) > 0
+                except ValueError:
+                    messagebox.showerror(title="Error", message="Please make sure that all neurons are valid")
+                    return False
+
         except ValueError:
-            messagebox.showerror(title="Error", message="Please enter a valid neurons number")
+            messagebox.showerror(title="Error", message="Please enter a valid neurons sequence separated by commas")
             return False
 
     def valid_layers(self):
@@ -312,5 +317,6 @@ class GUI:
                 input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
             elif self.task == 3:
                 layers = int(self.epochs_no.get().strip())
-                neurons = int(self.epochs_no.get().strip())
-                input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                neurons = self.neurons_no.get().split(',')
+                print('Validated')
+                # input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
