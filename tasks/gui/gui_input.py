@@ -337,7 +337,7 @@ class GUI:
                     input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
 
             elif self.task == 3:
-                layers = int(self.epochs_no.get().strip())
+                layers = int(self.layers_no.get().strip())
                 neurons = self.neurons_no.get().strip().split(',')
                 for i in range(len(neurons)):
                     neurons[i]=int(neurons[i])

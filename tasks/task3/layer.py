@@ -7,7 +7,7 @@ class layer():
     def __init__(self, neurons_current, neurons_before, check_bias, choice, islastlayer):
         self.neurons_current = neurons_current
         self.neurons_before = neurons_before
-        self.weights_before = np.ones([self.neurons_current, (self.neurons_before + 1)])
+        self.weights_before = np.random.randn(self.neurons_current, (self.neurons_before + 1))
         self.check_bias = check_bias
         self.neurons_array = [neurons() for i in range(neurons_current)]
         self.choice = choice

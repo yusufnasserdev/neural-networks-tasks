@@ -10,7 +10,6 @@ class network():
         self.choice = choice  # int
         self.bais = bais  # int
         self.numoflayers = numoflayerss + 1
-        self.numofneurons = numofneurons
         self.layers_array = list()
         for i in range(len(numofneurons)):
             if i == 0:
@@ -22,7 +21,7 @@ class network():
     def learning(self, train):
         for i in range(self.epochs):
             for count in range(len(train)):
-                features = train.iloc[0][1:]
+                features = train.iloc[count][1:]
                 features = features.tolist()
                 # forward step
                 output = list()
@@ -78,7 +77,7 @@ class network():
     def testing(self, test):
         cnt = 0
         for count in range(0, len(test)):
-            features = test.iloc[0][1:]
+            features = test.iloc[count][1:]
             features = features.tolist()
             # forward step
             output = list()
