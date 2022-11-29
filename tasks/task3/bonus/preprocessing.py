@@ -16,6 +16,8 @@ def prepare_data():
     df_test = pd.read_csv('../../datasets/mnist_test.csv')
     df_train = normalize(df_train)
     df_test = normalize(df_test)
+    df_train.fillna(0,inplace=True)
+    df_test.fillna(0, inplace=True)
     return df_train, df_test
 
 

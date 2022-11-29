@@ -52,18 +52,6 @@ class network():
                         output, weights = rev[j].backword(1, 1, target)
                     else:
                         output, weights = rev[j].backword(output, weights, target)
-                """while True:
-                    if cnt < 0:
-                        break
-                    if cnt != 0:
-                        weights = np.random.rand([self.layers_array[cnt], (self.layers_array[cnt - 1] + 1)])
-                    else:
-                        weights = np.random.rand([self.layers_array[cnt], 5])
-                    if cnt == self.numoflayers - 1:
-                        output, weights = self.layers_array[cnt].backword(1, 1, target)
-                    else:
-                        output, weights = self.layers_array[cnt].backword(output, weights, target)
-                    cnt -= 1"""
                 # update step
                 output = list()
                 for j in range(len(self.layers_array)):

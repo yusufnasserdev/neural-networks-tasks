@@ -20,6 +20,7 @@ class network():
 
     def learning(self, train):
         for i in range(self.epochs):
+            print(i)
             for count in range(len(train)):
                 features = train.iloc[count][1:]
                 features = features.tolist()
@@ -33,7 +34,6 @@ class network():
                 # backward step
                 cnt = self.numoflayers - 1
                 target = list()
-
                 for x in range(10):
                     if train['label'][count] == x:
                         target.append(1)
@@ -77,7 +77,6 @@ class network():
                         if output[j] > mx:
                             mx = output[j]
                             idx = j
-
                     if test['label'][count] == idx:
                         cnt += 1
         return cnt / len(test)
