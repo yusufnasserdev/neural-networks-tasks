@@ -16,8 +16,8 @@ def run_backpropagation(layers, neurons, epochs, active, bias, rate):
     testing_df = pd.concat(frames2)
     # to shuffle testing dataframe
     testing_df = testing_df.sample(frac=1, random_state=1, ignore_index=True)
-    network1=network(0.01,1000,1,True,3,[4,5,5])
+    network1=network(rate,epochs,active,bias,layers,neurons)
     network1.learning(training_df)
     acc=network1.testing(testing_df)
     print(acc)
-run_backpropagation(1,5,5,1,1,1)
+#run_backpropagation(1,5,5,1,1,1)

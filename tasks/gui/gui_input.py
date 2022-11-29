@@ -338,5 +338,7 @@ class GUI:
 
             elif self.task == 3:
                 layers = int(self.epochs_no.get().strip())
-                neurons = self.neurons_no.get().split(',')
+                neurons = self.neurons_no.get().strip().split(',')
+                for i in range(len(neurons)):
+                    neurons[i]=int(neurons[i])
                 input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
