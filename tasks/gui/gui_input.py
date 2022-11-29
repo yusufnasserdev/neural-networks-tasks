@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.font as f
 from tkinter import messagebox
 
-from gui.connector import input_adaline, input_perceptron  # , input_backpropagation
+from gui.connector import input_adaline, input_perceptron, input_backpropagation
 
 # Lists used in combo-boxes
 
@@ -71,7 +71,7 @@ class GUI:
                       font=m_font).grid(column=1, row=5, padx=40, pady=25)
 
             # Number of hidden layers entry
-            hl_placeholder = tk.StringVar(value=' # of hidden layers')
+            hl_placeholder = tk.StringVar(value='3')
             self.layers_no = tk.Entry(window, width=25, font=m_font, textvariable=hl_placeholder)
             self.layers_no.grid(column=2, row=5)
 
@@ -80,7 +80,7 @@ class GUI:
                       font=m_font).grid(column=3, row=5, padx=40, pady=25)
 
             # Number of neurons in each hidden layer entry
-            neurons_placeholder = tk.StringVar(value=' # of neurons')
+            neurons_placeholder = tk.StringVar(value='3,2,4')
             self.neurons_no = tk.Entry(window, width=25, font=m_font, textvariable=neurons_placeholder)
             self.neurons_no.grid(column=4, row=5)
 
@@ -158,7 +158,7 @@ class GUI:
                   font=m_font).grid(column=1, row=15, padx=40, pady=25)
 
         # Learning rate entry
-        lr_placeholder = tk.StringVar(value=' Learning rate')
+        lr_placeholder = tk.StringVar(value='0.01')
         self.learning_rate = tk.Entry(window, width=25, font=m_font, textvariable=lr_placeholder)
         self.learning_rate.grid(column=2, row=15)
 
@@ -167,7 +167,7 @@ class GUI:
                   font=m_font).grid(column=1, row=20, padx=40, pady=25)
 
         # Number of epochs entry
-        ne_placeholder = tk.StringVar(value=' # of epochs')
+        ne_placeholder = tk.StringVar(value='1000')
         self.epochs_no = tk.Entry(window, width=25, font=m_font, textvariable=ne_placeholder)
         self.epochs_no.grid(column=2, row=20)
 
@@ -186,7 +186,7 @@ class GUI:
                       font=m_font).grid(column=1, row=35, padx=40, pady=25)
 
             # MSE threshold entry
-            mse_placeholder = tk.StringVar(value=' MSE Threshold')
+            mse_placeholder = tk.StringVar(value='0.01')
             self.mse_threshold = tk.Entry(window, width=25, font=m_font, textvariable=mse_placeholder)
             self.mse_threshold.grid(column=2, row=35)
 
@@ -226,16 +226,22 @@ class GUI:
 
     def valid_epochs(self):
         try:
-            int(self.epochs_no.get().strip())
-            return True
+            if int(self.epochs_no.get().strip()) > 0:
+                return True
+            else:
+                messagebox.showerror(title="Error", message="Number of epochs have to be bigger than 0")
+                return False
         except ValueError:
             messagebox.showerror(title="Error", message="Please enter a valid epochs number")
             return False
 
     def valid_rate(self):
         try:
-            float(self.learning_rate.get().strip())
-            return True
+            if float(self.learning_rate.get().strip()) > 0:
+                return True
+            else:
+                messagebox.showerror(title="Error", message="Learning rate have to be bigger than 0")
+                return False
         except ValueError:
             messagebox.showerror(title="Error", message="Please enter a valid learning rate")
             return False
@@ -259,7 +265,11 @@ class GUI:
             return True
 
         try:
-            return float(self.mse_threshold.get().strip()) > 0
+            if float(self.mse_threshold.get().strip()) > 0:
+                return True
+            else:
+                messagebox.showerror(title="Error", message="MSE threshold have to be bigger than 0")
+                return False
         except ValueError:
             messagebox.showerror(title="Error", message="Please enter a valid MSE threshold")
             return False
@@ -269,7 +279,13 @@ class GUI:
             return True
 
         try:
-            neurons_list = self.neurons_no.get().split(',')
+            neurons_list = self.neurons_no.get().strip().split(',')
+
+            if len(neurons_list) != int(self.layers_no.get().strip()):
+                messagebox.showerror(title="Error", message="Please make sure that all the hidden layers have a "
+                                                            "neurons number")
+                return False
+
             for neuron in neurons_list:
                 try:
                     return int(neuron) > 0
@@ -278,7 +294,8 @@ class GUI:
                     return False
 
         except ValueError:
-            messagebox.showerror(title="Error", message="Please enter a valid neurons sequence separated by commas")
+            messagebox.showerror(title="Error", message="Please enter a valid neurons sequence separated by commas "
+                                                        "and no spaces in between")
             return False
 
     def valid_layers(self):
@@ -298,25 +315,28 @@ class GUI:
                self.valid_rate() and \
                self.valid_epochs() and \
                self.valid_mse() and \
-               self.valid_neurons() and \
-               self.valid_layers()
+               self.valid_layers() and \
+               self.valid_neurons()
 
     def run(self):
+
         if self.valid_input():
-            c1 = self.class1_cb.get().strip()
-            c2 = self.class2_cb.get().strip()
-            f1 = self.feature1_cb.get().strip()
-            f2 = self.feature2_cb.get().strip()
             epochs = int(self.epochs_no.get().strip())
             rate = float(self.learning_rate.get().strip())
 
-            if self.task == 1:
-                input_perceptron(c1, c2, f1, f2, epochs, self.bs.get(), rate)
-            elif self.task == 2:
-                mse = float(self.mse_threshold.get().strip())
-                input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
+            if self.task == 1 or self.task == 2:
+                f2 = self.feature2_cb.get().strip()
+                c1 = self.class1_cb.get().strip()
+                c2 = self.class2_cb.get().strip()
+                f1 = self.feature1_cb.get().strip()
+
+                if self.task == 1:
+                    input_perceptron(c1, c2, f1, f2, epochs, self.bs.get(), rate)
+                elif self.task == 2:
+                    mse = float(self.mse_threshold.get().strip())
+                    input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
+
             elif self.task == 3:
                 layers = int(self.epochs_no.get().strip())
                 neurons = self.neurons_no.get().split(',')
-                print('Validated')
-                # input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
