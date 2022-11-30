@@ -13,10 +13,10 @@ class Network:
         self.layers_array = list()
         for i in range(len(numofneurons)):
             if i == 0:
-                self.layers_array.append(layer(numofneurons[i], 784, bais, choice, False))
+                self.layers_array.append(Layer(numofneurons[i], 784, bais, choice, False))
             else:
-                self.layers_array.append(layer(numofneurons[i], numofneurons[i - 1], bais, choice, False))
-        self.layers_array.append(layer(10, numofneurons[-1], bais, choice, True))
+                self.layers_array.append(Layer(numofneurons[i], numofneurons[i - 1], bais, choice, False))
+        self.layers_array.append(Layer(10, numofneurons[-1], bais, choice, True))
 
     def learning(self, train):
         for i in range(self.epochs):
@@ -44,9 +44,9 @@ class Network:
                 rev = self.layers_array[::-1]
                 for j in range(len(rev)):
                     if j == 0:
-                        output, weights = rev[j].backword(1, 1, target)
+                        output, weights = rev[j].backward(1, 1, target)
                     else:
-                        output, weights = rev[j].backword(output, weights, target)
+                        output, weights = rev[j].backward(output, weights, target)
 
                 # update step
                 output = list()

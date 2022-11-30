@@ -8,8 +8,8 @@ def run_backpropagation(layers, m_neurons, epochs, active, bias, rate):
     train1, test1 = split("Adelie", df)
     train2, test2 = split("Gentoo", df)
     train3, test3 = split("Chinstrap", df)
-    frames = [train1, train2, train3]
-    training_df = pd.concat(frames)
+    frames1 = [train1, train2, train3]
+    training_df = pd.concat(frames1)
     # to shuffle training dataframe
     training_df = training_df.sample(frac=1, random_state=1, ignore_index=True)
     # to join test1 and test2 in one dataframe

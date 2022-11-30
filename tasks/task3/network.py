@@ -9,53 +9,66 @@ class Network:
         self.epochs = epochs
         self.choice = choice  # int
         self.bias = bias  # int
-        self.num_layers = layers_num + 1
+        self.layers_num = layers_num + 1
         self.layers_array = list()
+
+        # Hidden layers
         for i in range(len(neurons_num)):
             if i == 0:
-                self.layers_array.append(Layer(neurons_num[i], 5, bias, choice, False))
+                self.layers_array.append(Layer(neurons_num[i], 5, self.bias, self.choice, False))
             else:
-                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], bias, choice, False))
-        self.layers_array.append(Layer(3, neurons_num[-1], bias, choice, True))
+                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], self.bias, self.choice, False))
+
+        # Output layer
+        self.layers_array.append(Layer(3, neurons_num[-1], self.bias, self.choice, True))
 
     def learning(self, train):
+        # Iterate the epochs
         for i in range(self.epochs):
+            # Iterate the train dataset
             for count in range(len(train)):
-                features = train.iloc[count][1:].tolist()
-                # forward step
-                output = list()
+                # Row features
+                row = train.iloc[count][1:].tolist()
+
+                # Forward step
+
+                # Layer FNet
+                f_net = list()
+                # Iterate the layers
                 for j in range(len(self.layers_array)):
                     if j == 0:
-                        output = self.layers_array[j].forward(features)
+                        output = self.layers_array[j].forward(row)
                     else:
-                        output = self.layers_array[j].forward(output)
-                # backward step
-                cnt = self.num_layers - 1
+                        output = self.layers_array[j].forward(f_net)
+
+                # Backward step
+
+                # One hot encoding to the actual output
                 target = list()
-                if train['species'][count] == 'Adelie':
-                    target.append(1)
-                    target.append(0)
-                    target.append(0)
-                elif train['species'][count] == 'Gentoo':
-                    target.append(0)
-                    target.append(1)
-                    target.append(0)
-                else:
-                    target.append(0)
-                    target.append(0)
-                    target.append(1)
-                output = list()
-                rev = self.layers_array[::-1]
-                for j in range(len(rev)):
-                    if j == 0:
-                        output, weights = rev[j].backword(1, 1, target)
+
+                # Classes list
+                classes = ['Adelie', 'Gentoo', 'Chinstrap']
+
+                for x in classes:
+                    if train['species'][count] == x:
+                        target.append(1)
                     else:
-                        output, weights = rev[j].backword(output, weights, target)
+                        target.append(0)
+
+                # Sigma list
+                sigma = list()
+
+                layers_reversed = self.layers_array[::-1]
+                output, weights = layers_reversed[0].backword(1, 1, target)
+
+                for j in range(len(layers_reversed)):
+                    output, weights = layers_reversed[j].backword(sigma, weights, target)
+
                 # update step
                 output = list()
                 for j in range(len(self.layers_array)):
                     if j == 0:
-                        output = self.layers_array[j].update(features, self.rate)
+                        output = self.layers_array[j].update(row, self.rate)
                         output.append(self.bias)
                     else:
                         output = self.layers_array[j].update(output, self.rate)
@@ -73,7 +86,7 @@ class Network:
                     output = self.layers_array[i].forward(features)
                 else:
                     output = self.layers_array[i].forward(output)
-                if i == self.num_layers - 1:
+                if i == self.layers_num - 1:
                     mx = -1
                     idx = -1
                     for j in range(len(output)):

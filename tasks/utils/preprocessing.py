@@ -18,6 +18,21 @@ def prepare_data():
     return df
 
 
+def split(name, df):
+    if name == "Adelie":
+        adelie_train = df[0:30]
+        adelie_test = df[30:50]
+        return adelie_train, adelie_test
+    elif name == "Gentoo":
+        gentoo_train = df[50:80]
+        gentoo_test = df[80:100]
+        return gentoo_train, gentoo_test
+    elif name == "Chinstrap":
+        chinstrap_train = df[100:130]
+        chinstrap_test = df[130:150]
+        return chinstrap_train, chinstrap_test
+
+
 def report(df):
     for i in range(0, 5):
         for j in range(i + 1, 5):
@@ -25,18 +40,3 @@ def report(df):
             plt.xlabel(features[i])
             plt.ylabel(features[j])
             plt.show()
-
-
-def split(name, df):
-    if name == "Adelie":
-        adelietrain = df[0:30]
-        adelietest = df[30:50]
-        return adelietrain, adelietest
-    elif name == "Gentoo":
-        gentootrain = df[50:80]
-        gentootest = df[80:100]
-        return gentootrain, gentootest
-    elif name == "Chinstrap":
-        chinstraptrain = df[100:130]
-        chinstraptest = df[130:150]
-        return chinstraptrain, chinstraptest

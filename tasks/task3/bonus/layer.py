@@ -2,7 +2,7 @@ import numpy as np
 from neuron import *
 
 
-class layer():
+class Layer():
 
     def __init__(self, neurons_current, neurons_before, check_bias, choice, islastlayer):
         self.neurons_current = neurons_current
@@ -25,9 +25,9 @@ class layer():
             arr.append(self.neurons_array[i].get_net())
         return arr
 
-    def backword(self, segmabefore, weights, target):
+    def backward(self, segmabefore, weights, target):
         for i in range(self.neurons_current):
-            if self.islastlayer == True:
+            if self.islastlayer:
                 self.neurons_array[i].calc_sigma_output_layer(target[i], self.choice)
             else:
                 self.neurons_array[i].calc_sigma(segmabefore, weights[:, i], self.choice)
