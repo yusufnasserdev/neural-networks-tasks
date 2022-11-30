@@ -1,27 +1,24 @@
-import numpy as np
-import seaborn as sea
-import matplotlib.pyplot as plt
-
-from mlxtend.plotting import plot_confusion_matrix
-
 import warnings
+
+import matplotlib.pyplot as plt
+import seaborn as sea
+from mlxtend.plotting import plot_confusion_matrix
 
 warnings.filterwarnings("ignore")
 
 
-def generate_conf_mat(tp, tn, fp, fn):
-    conf_matrix = np.array([[tp, fp], [fn, tn]])
-
-    fig, ax = plot_confusion_matrix(conf_mat=conf_matrix,
-                                    figsize=(6, 6),
+def generate_conf_mat(mat, classes):
+    fig, ax = plot_confusion_matrix(conf_mat=mat,
+                                    class_names=classes,
+                                    figsize=(7, 7),
                                     cmap=plt.cm.Greens,
                                     show_absolute=True,
                                     show_normed=True,
                                     colorbar=True)
 
-    plt.xlabel('Predictions', fontsize=18)
-    plt.ylabel('Actual', fontsize=18)
-    plt.title('Confusion Matrix', fontsize=18)
+    plt.xlabel('Predictions', fontsize=15)
+    plt.ylabel('Actual', fontsize=15)
+    plt.title('Confusion Matrix', fontsize=15)
     plt.savefig('conf_mat.png')
 
 

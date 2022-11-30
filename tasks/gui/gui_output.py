@@ -2,16 +2,17 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
+
 from utils.visualization import generate_conf_mat
 
 
-def show_output(tp, tn, fp, fn, acc):
+def show_output(conf_matrix, classes, acc):
     # Creating tkinter window
     output_window = tk.Tk()
     output_window.title('Output')
 
-    w = 900  # width for the Tk root
-    h = 800  # height for the Tk root
+    w = 1000  # width for the Tk root
+    h = 900  # height for the Tk root
 
     # get screen width and height
     ws = output_window.winfo_screenwidth()  # width of the screen
@@ -36,11 +37,11 @@ def show_output(tp, tn, fp, fn, acc):
     ttk.Label(output_window, text=acc_txt,
               font=("Roboto", 12)).grid(column=2, row=5, padx=10, pady=25)
 
-    generate_conf_mat(tp, tn, fp, fn)
+    generate_conf_mat(conf_matrix, classes)
 
     # Display confusion matrix image
     img = Image.open('conf_mat.png')
-    display = ImageTk.PhotoImage(master=output_window, width=200, height=200, image=img)
+    display = ImageTk.PhotoImage(master=output_window, width=300, height=200, image=img)
 
     # Image Label
     ttk.Label(output_window,

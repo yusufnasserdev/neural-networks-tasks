@@ -1,7 +1,6 @@
-import math
-
-from layer import *
+from task3.layer import *
 import numpy as np
+import math
 
 
 def activation_function(activation_choice, result):
@@ -15,9 +14,9 @@ class Neurons:
     net = 0
     sigma_back = 0
 
-    def calc_net(self, input, weight, activation_chocie):
-        result = np.dot(input, np.transpose(weight))
-        self.net = activation_function(activation_chocie, result)
+    def calc_net(self, m_input, weight, activation_choice):
+        result = np.dot(m_input, np.transpose(weight))
+        self.net = activation_function(activation_choice, result)
 
     def calc_sigma_output_layer(self, desired, activation_choice):
         if activation_choice == 1:

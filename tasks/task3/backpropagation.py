@@ -1,6 +1,7 @@
 from utils.preprocessing import prepare_data, split
 import pandas as pd
-from network import *
+from task3.network import Network
+from gui.gui_output import show_output
 
 
 def run_backpropagation(layers, m_neurons, epochs, active, bias, rate):
@@ -19,5 +20,5 @@ def run_backpropagation(layers, m_neurons, epochs, active, bias, rate):
     testing_df = testing_df.sample(frac=1, random_state=1, ignore_index=True)
     network1 = Network(rate, epochs, active, bias, layers, m_neurons)
     network1.learning(training_df)
-    acc = network1.testing(testing_df)
-    print(acc)
+    mat, classes, acc = network1.testing(testing_df)
+    show_output(mat, classes, acc)

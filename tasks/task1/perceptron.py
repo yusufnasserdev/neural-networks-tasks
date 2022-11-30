@@ -1,3 +1,5 @@
+import numpy as np
+
 from utils import preprocessing
 from gui.gui_output import show_output
 
@@ -89,6 +91,10 @@ def run_perceptron(class1, class2, x1, x2, ep, bs, rate):
     acc = cnt / len(testing_df)
 
     # visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
-    show_output(tp, tn, fp, fn, acc)
+    conf_matrix = np.array([[tp, fp],
+                            [fn, tn]])
+
+    classes = [class1, class2]
+    show_output(conf_matrix, classes, acc)
 
     return acc
