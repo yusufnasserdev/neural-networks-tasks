@@ -3,7 +3,7 @@ import numpy as np
 from layer import *
 
 
-class network():
+class Network:
     def __init__(self, rate, epochs, choice, bais, numoflayerss, numofneurons):
         self.rate = rate
         self.epochs = epochs
@@ -13,13 +13,14 @@ class network():
         self.layers_array = list()
         for i in range(len(numofneurons)):
             if i == 0:
-                self.layers_array.append(layer(numofneurons[i], 5, bais, choice, False))
+                self.layers_array.append(layer(numofneurons[i], 784, bais, choice, False))
             else:
                 self.layers_array.append(layer(numofneurons[i], numofneurons[i - 1], bais, choice, False))
-        self.layers_array.append(layer(3, numofneurons[-1], bais, choice, True))
+        self.layers_array.append(layer(10, numofneurons[-1], bais, choice, True))
 
     def learning(self, train):
         for i in range(self.epochs):
+            print(i)
             for count in range(len(train)):
                 features = train.iloc[count][1:]
                 features = features.tolist()
@@ -33,18 +34,12 @@ class network():
                 # backward step
                 cnt = self.numoflayers - 1
                 target = list()
-                if train['species'][count] == 'Adelie':
-                    target.append(1)
-                    target.append(0)
-                    target.append(0)
-                elif train['species'][count] == 'Gentoo':
-                    target.append(0)
-                    target.append(1)
-                    target.append(0)
-                else:
-                    target.append(0)
-                    target.append(0)
-                    target.append(1)
+                for x in range(10):
+                    if train['label'][count] == x:
+                        target.append(1)
+                    else:
+                        target.append(0)
+
                 output = list()
                 rev = self.layers_array[::-1]
                 for j in range(len(rev)):
@@ -52,6 +47,7 @@ class network():
                         output, weights = rev[j].backword(1, 1, target)
                     else:
                         output, weights = rev[j].backword(output, weights, target)
+
                 # update step
                 output = list()
                 for j in range(len(self.layers_array)):
@@ -81,10 +77,6 @@ class network():
                         if output[j] > mx:
                             mx = output[j]
                             idx = j
-                    if test['species'][count] == 'Adelie' and idx == 0:
-                        cnt += 1
-                    elif test['species'][count] == 'Gentoo' and idx == 1:
-                        cnt += 1
-                    elif test['species'][count] == 'Chinstrap' and idx == 2:
+                    if test['label'][count] == idx:
                         cnt += 1
         return cnt / len(test)

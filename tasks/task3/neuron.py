@@ -11,19 +11,13 @@ def activation_function(activation_choice, result):
         return (1 - math.exp(-result)) / (1 + math.exp(-result))
 
 
-class neurons():
+class Neurons:
     net = 0
     sigma_back = 0
 
     def calc_net(self, input, weight, activation_chocie):
-        try:
-            result = np.dot(input, np.transpose(weight))
-            self.net = activation_function(activation_chocie, result)
-        except:
-            print(input)
-            print("//////////////////////////")
-            print(weight)
-
+        result = np.dot(input, np.transpose(weight))
+        self.net = activation_function(activation_chocie, result)
 
     def calc_sigma_output_layer(self, desired, activation_choice):
         if activation_choice == 1:
@@ -31,14 +25,14 @@ class neurons():
         else:
             self.sigma_back = (desired - self.net) * (self.net + 1) * (1 - self.net)
 
-    def calc_sigma(self, input, weight, activation_choice):
+    def calc_sigma(self, m_input, weight, activation_choice):
         if activation_choice == 1:
-            self.sigma_back = self.net * (1 - self.net) * np.dot(input, weight)
+            self.sigma_back = self.net * (1 - self.net) * np.dot(m_input, weight)
         else:
-            self.sigma_back = (self.net + 1) * (1 - self.net) * np.dot(input, weight)
+            self.sigma_back = (self.net + 1) * (1 - self.net) * np.dot(m_input, weight)
 
-    def getsigma(self):
+    def get_sigma(self):
         return self.sigma_back
 
-    def getnet(self):
+    def get_net(self):
         return self.net
