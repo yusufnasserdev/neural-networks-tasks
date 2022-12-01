@@ -1,13 +1,12 @@
-from layer import *
-import math
+from task3.bonus.layer import *
 import numpy as np
 
 
 def activation_function(activation_choice, result):
     if activation_choice == 1:
-        return 1 / (1 + math.exp(-result))
+        return 1 / (1 + np.exp(-result))
     else:
-        return (1 - math.exp(-result)) / (1 + math.exp(-result))
+        return (1 - np.exp(-result)) / (1 + np.exp(-result))
 
 
 class Neurons:

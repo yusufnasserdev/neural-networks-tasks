@@ -1,5 +1,5 @@
 import numpy as np
-from neuron import *
+from task3.bonus.neuron import *
 
 
 class Layer():

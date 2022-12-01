@@ -1,6 +1,6 @@
 import numpy as np
 
-from layer import *
+from task3.bonus.layer import *
 
 
 class Network:

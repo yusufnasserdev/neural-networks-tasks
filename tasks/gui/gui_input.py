@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 import tkinter.font as f
 from tkinter import messagebox
 
-from gui.connector import input_adaline, input_perceptron, input_backpropagation
+from gui.connector import input_adaline, input_perceptron, input_backpropagation, input_bonus
 
 # Lists used in combo-boxes
 
@@ -65,7 +65,7 @@ class GUI:
 
         m_font = f.Font(family="Calibri", size=12)
 
-        if self.task == 3:
+        if self.task == 3 or self.task == 4:
             # Number of hidden layers label
             ttk.Label(window, text="Hidden Layers # :",
                       font=m_font).grid(column=1, row=5, padx=40, pady=25)
@@ -190,7 +190,7 @@ class GUI:
             self.mse_threshold = tk.Entry(window, width=25, font=m_font, textvariable=mse_placeholder)
             self.mse_threshold.grid(column=2, row=35)
 
-        if self.task == 3:
+        if self.task == 3 or self.task == 4:
             # Activation function label
             ttk.Label(window, text="Activation Function :",
                       font=m_font).grid(column=1, row=35, padx=40, pady=25)
@@ -275,7 +275,7 @@ class GUI:
             return False
 
     def valid_neurons(self):
-        if self.task != 3:
+        if self.task != 3 and self.task != 4:
             return True
 
         try:
@@ -299,7 +299,7 @@ class GUI:
             return False
 
     def valid_layers(self):
-        if self.task != 3:
+        if self.task != 3 and self.task != 4:
             return True
 
         try:
@@ -336,9 +336,13 @@ class GUI:
                     mse = float(self.mse_threshold.get().strip())
                     input_adaline(c1, c2, f1, f2, epochs, self.bs.get(), rate, mse)
 
-            elif self.task == 3:
+            elif self.task == 3 or self.task == 4:
                 layers = int(self.layers_no.get().strip())
                 neurons = self.neurons_no.get().strip().split(',')
                 for i in range(len(neurons)):
-                    neurons[i]=int(neurons[i])
-                input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                    neurons[i] = int(neurons[i])
+
+                if self.task == 3:
+                    input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                elif self.task == 4:
+                    input_bonus(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)

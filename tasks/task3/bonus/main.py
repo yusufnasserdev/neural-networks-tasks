@@ -1,8 +1,5 @@
-from gui.gui_input import GUI
-import pandas as pd
-import numpy as np
-from backpropagation import *
+from task3.bonus.backpropagation import run_bonus_back
 
 # gui = GUI(task=4)
 
-run_backpropagation(3, [5, 4, 3], 10, 0, 1, 0.01)
+run_bonus_back(3, [5, 4, 3], 50, 1, 1, 0.01)
