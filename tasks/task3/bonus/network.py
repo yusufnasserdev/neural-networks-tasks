@@ -69,6 +69,31 @@ class Network:
 
                 for j in range(1, len(self.layers_array)):
                     f_net = self.layers_array[j].update(f_net, self.rate)
+        cnt = 0
+        for count in range(len(train)):
+            # Row features
+            row = train.iloc[count][1:].tolist()
+
+            # Forward step
+
+            # FNet first layer
+            f_net = self.layers_array[0].forward(row)
+
+            # Iterate the layers
+
+            for j in range(1, len(self.layers_array)):
+                f_net = self.layers_array[j].forward(f_net)
+                if j == self.layers_num - 1:
+                    mx = -1
+                    idx = -1
+                    for j in range(len(f_net)):
+                        if f_net[j] > mx:
+                            mx = f_net[j]
+                            idx = j
+                    actual = train['label'][count]
+                    if actual == idx:
+                        cnt += 1
+        print("Training acc= ", cnt / len(train))
 
     def testing(self, test):
         cnt = 0

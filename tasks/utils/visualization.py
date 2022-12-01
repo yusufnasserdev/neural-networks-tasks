@@ -10,7 +10,7 @@ warnings.filterwarnings("ignore")
 def generate_conf_mat(mat, classes):
     fig, ax = plot_confusion_matrix(conf_mat=mat,
                                     class_names=classes,
-                                    figsize=(8, 8),
+                                    figsize=(6, 6),
                                     cmap=plt.cm.Greens,
                                     show_absolute=True,
                                     show_normed=True,

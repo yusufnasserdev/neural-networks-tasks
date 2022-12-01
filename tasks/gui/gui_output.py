@@ -11,8 +11,8 @@ def show_output(conf_matrix, classes, acc):
     output_window = tk.Tk()
     output_window.title('Output')
 
-    w = 1200  # width for the Tk root
-    h = 900  # height for the Tk root
+    w = 900  # width for the Tk root
+    h = 800  # height for the Tk root
 
     # get screen width and height
     ws = output_window.winfo_screenwidth()  # width of the screen
