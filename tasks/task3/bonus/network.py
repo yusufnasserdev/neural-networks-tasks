@@ -1,87 +1,104 @@
 import numpy as np
-
-from task3.bonus.layer import *
+from task3.bonus.layer import Layer
 
 
 class Network:
-    def __init__(self, rate, epochs, choice, bais, numoflayerss, numofneurons):
+    def __init__(self, rate, epochs, choice, bias, layers_num, neurons_num):
         self.rate = rate
         self.epochs = epochs
         self.choice = choice  # int
-        self.bais = bais  # int
-        self.numoflayers = numoflayerss + 1
+        self.bias = bias  # int
+        self.layers_num = layers_num + 1
         self.layers_array = list()
-        for i in range(len(numofneurons)):
+
+        # Hidden layers
+        for i in range(len(neurons_num)):
             if i == 0:
-                self.layers_array.append(Layer(numofneurons[i], 784, bais, choice, False))
+                self.layers_array.append(Layer(neurons_num[i], 784, bias, choice, False))
             else:
-                self.layers_array.append(Layer(numofneurons[i], numofneurons[i - 1], bais, choice, False))
-        self.layers_array.append(Layer(10, numofneurons[-1], bais, choice, True))
+                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], bias, choice, False))
+
+        # Output layer
+        self.layers_array.append(Layer(10, neurons_num[-1], bias, choice, True))
 
     def learning(self, train):
+
+        # Iterate the epochs
         for i in range(self.epochs):
-            print(i)
+            print("Epoch: ", i + 1)
+
+            # Iterate the train dataset
             for count in range(len(train)):
-                features = train.iloc[count][1:]
-                features = features.tolist()
-                # forward step
-                output = list()
-                for j in range(len(self.layers_array)):
-                    if j == 0:
-                        output = self.layers_array[j].forward(features)
-                    else:
-                        output = self.layers_array[j].forward(output)
-                # backward step
-                cnt = self.numoflayers - 1
+                # Row features
+                row = train.iloc[count][1:].tolist()
+
+                # Forward step
+
+                # FNet first layer
+                f_net = self.layers_array[0].forward(row)
+
+                # Iterate the layers
+                for j in range(1, len(self.layers_array)):
+                    f_net = self.layers_array[j].forward(f_net)
+
+                # Backward step
+
+                # One hot encoding to the actual output
                 target = list()
+
                 for x in range(10):
                     if train['label'][count] == x:
                         target.append(1)
                     else:
                         target.append(0)
 
-                output = list()
-                rev = self.layers_array[::-1]
-                for j in range(len(rev)):
-                    if j == 0:
-                        output, weights = rev[j].backward(1, 1, target)
-                    else:
-                        output, weights = rev[j].backward(output, weights, target)
+                # Reversing layers to execute the backpropagation
+                layers_reversed = self.layers_array[::-1]
 
-                # update step
-                output = list()
-                for j in range(len(self.layers_array)):
-                    if j == 0:
-                        output = self.layers_array[j].update(features, self.rate)
-                        output.append(self.bais)
-                    else:
-                        output = self.layers_array[j].update(output, self.rate)
-                        output.append(self.bais)
+                # Last layer
+                sigma, weights = layers_reversed[0].backward(1, 1, target)
+
+                for j in range(1, len(layers_reversed)):
+                    sigma, weights = layers_reversed[j].backward(sigma, weights, target)
+
+                # Update step
+
+                # First layer
+                f_net = self.layers_array[0].update(row, self.rate)
+                f_net.append(self.bias)
+
+                for j in range(1, len(self.layers_array)):
+                    f_net = self.layers_array[j].update(f_net, self.rate)
 
     def testing(self, test):
         cnt = 0
+
         classes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+
         conf_matrix = np.zeros([10, 10], dtype=int)
+
         for count in range(0, len(test)):
-            features = test.iloc[count][1:]
-            features = features.tolist()
-            # forward step
-            output = list()
-            for i in range(len(self.layers_array)):
-                if i == 0:
-                    output = self.layers_array[i].forward(features)
-                else:
-                    output = self.layers_array[i].forward(output)
-                if i == self.numoflayers - 1:
+            row = test.iloc[count][1:].tolist()
+
+            # Forward step
+
+            f_net = self.layers_array[0].forward(row)
+            for i in range(1, len(self.layers_array)):
+                f_net = self.layers_array[i].forward(f_net)
+
+                if i == self.layers_num - 1:
                     mx = -1
                     idx = -1
-                    for j in range(len(output)):
-                        if output[j] > mx:
-                            mx = output[j]
+                    for j in range(len(f_net)):
+                        if f_net[j] > mx:
+                            mx = f_net[j]
                             idx = j
-                    actual=test['label'][count]
+
+                    actual = test['label'][count]
                     conf_matrix[actual][idx] += 1
+
                     if actual == idx:
                         cnt += 1
+
         acc = cnt / len(test)
         return conf_matrix, classes, acc

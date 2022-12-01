@@ -1,6 +1,5 @@
 import numpy as np
-
-from task3.layer import *
+from task3.layer import Layer
 
 
 class Network:
@@ -23,8 +22,11 @@ class Network:
         self.layers_array.append(Layer(3, neurons_num[-1], self.bias, self.choice, True))
 
     def learning(self, train):
+
         # Iterate the epochs
         for i in range(self.epochs):
+            print("Epoch: ", i + 1)
+
             # Iterate the train dataset
             for count in range(len(train)):
                 # Row features
@@ -57,10 +59,10 @@ class Network:
                 layers_reversed = self.layers_array[::-1]
 
                 # Last layer
-                sigma, weights = layers_reversed[0].backword(1, 1, target)
+                sigma, weights = layers_reversed[0].backward(1, 1, target)
 
                 for j in range(1, len(layers_reversed)):
-                    sigma, weights = layers_reversed[j].backword(sigma, weights, target)
+                    sigma, weights = layers_reversed[j].backward(sigma, weights, target)
 
                 # Update step
 

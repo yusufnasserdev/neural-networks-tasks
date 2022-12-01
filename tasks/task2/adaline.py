@@ -1,3 +1,5 @@
+import numpy as np
+
 from utils import visualization
 from utils.preprocessing import prepare_data, split
 import pandas as pd
@@ -90,7 +92,10 @@ def run_adaline(class1, class2, x1, x2, ep, bs, rate, mse):
 
     acc = cnt / len(testing_df)
 
-    visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
-    show_output(tp, tn, fp, fn, acc)
+    # Classes list
+    classes = ['Adelie', 'Gentoo', 'Chinstrap']
 
-    return acc
+    conf_matrix = np.zeros([3, 3], dtype=int)
+
+    visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
+    show_output(conf_matrix, classes, acc)
