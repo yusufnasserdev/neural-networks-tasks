@@ -60,6 +60,8 @@ class Network:
 
     def testing(self, test):
         cnt = 0
+        classes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        conf_matrix = np.zeros([10, 10], dtype=int)
         for count in range(0, len(test)):
             features = test.iloc[count][1:]
             features = features.tolist()
@@ -77,6 +79,9 @@ class Network:
                         if output[j] > mx:
                             mx = output[j]
                             idx = j
-                    if test['label'][count] == idx:
+                    actual=test['label'][count]
+                    conf_matrix[actual][idx] += 1
+                    if actual == idx:
                         cnt += 1
-        return cnt / len(test)
+        acc = cnt / len(test)
+        return conf_matrix, classes, acc
