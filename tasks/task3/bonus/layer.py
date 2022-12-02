@@ -1,6 +1,6 @@
 import numpy as np
 from task3.bonus.neuron import Neurons
-from neuron import calc_net_vectorized
+
 
 
 class Layer:

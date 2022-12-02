@@ -91,11 +91,10 @@ def run_adaline(class1, class2, x1, x2, ep, bs, rate, mse):
             tn += 1
 
     acc = cnt / len(testing_df)
-
-    # Classes list
-    classes = ['Adelie', 'Gentoo', 'Chinstrap']
-
-    conf_matrix = np.zeros([3, 3], dtype=int)
-
+    conf_matrix = np.array([[tp, fp],
+                            [fn, tn]])
+    classes = [class1, class2]
     visualization.visualize(test1, test2, x1, x2, w0, w1, w2)
     show_output(conf_matrix, classes, acc)
+    # Classes list
+
