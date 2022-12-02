@@ -80,7 +80,7 @@ class GUI:
                       font=m_font).grid(column=3, row=5, padx=40, pady=25)
 
             # Number of neurons in each hidden layer entry
-            neurons_placeholder = tk.StringVar(value='3,2,4')
+            neurons_placeholder = tk.StringVar(value='16,8,4')
             self.neurons_no = tk.Entry(window, width=25, font=m_font, textvariable=neurons_placeholder)
             self.neurons_no.grid(column=4, row=5)
 
