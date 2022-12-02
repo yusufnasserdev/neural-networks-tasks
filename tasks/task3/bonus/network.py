@@ -112,7 +112,7 @@ class Network:
                 f_net = self.layers_array[i].forward(f_net)
 
                 if i == self.layers_num - 1:
-                    mx = -1
+                    mx = -1e10
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
