@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 from task3.bonus.layer import Layer
 
@@ -65,6 +67,7 @@ class Network:
                     f_net = self.layers_array[j].update(f_net, self.rate)
                     f_net.append(self.bias)
 
+        # Calculating training acc
         cnt = 0
         for count in range(len(train)):
             # Row features
@@ -77,15 +80,16 @@ class Network:
 
             # Iterate the layers
 
-            for j in range(1, len(self.layers_array)):
-                f_net = self.layers_array[j].forward(f_net)
-                if j == self.layers_num - 1:
-                    mx = -1
+            for i in range(1, len(self.layers_array)):
+                f_net = self.layers_array[i].forward(f_net)
+                if i == self.layers_num - 1:
+                    mx = -1 * sys.float_info.max
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
                             mx = f_net[j]
                             idx = j
+
                     actual = train['label'][count]
                     if actual == idx:
                         cnt += 1
@@ -108,7 +112,7 @@ class Network:
                 f_net = self.layers_array[i].forward(f_net)
 
                 if i == self.layers_num - 1:
-                    mx = -1e10
+                    mx = -1 * sys.float_info.max
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:

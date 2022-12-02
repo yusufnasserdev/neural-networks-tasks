@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 from task3.layer import Layer
 
@@ -66,10 +68,10 @@ class Network:
             # FNet first layer
             f_net = self.layers_array[0].forward(row)
             # Iterate the layers
-            for j in range(1, len(self.layers_array)):
-                f_net = self.layers_array[j].forward(f_net)
-                if j == self.layers_num - 1:
-                    mx = -1
+            for i in range(1, len(self.layers_array)):
+                f_net = self.layers_array[i].forward(f_net)
+                if i == self.layers_num - 1:
+                    mx = -1 * sys.float_info.max
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
@@ -90,7 +92,7 @@ class Network:
             for i in range(1, len(self.layers_array)):
                 f_net = self.layers_array[i].forward(f_net)
                 if i == self.layers_num - 1:
-                    mx = -1e10
+                    mx = -1 * sys.float_info.max
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
