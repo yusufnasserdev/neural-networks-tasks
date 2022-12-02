@@ -9,6 +9,17 @@ def activation_function(activation_choice, result):
         return (1 - np.exp(-result)) / (1 + np.exp(-result))
 
 
+def calc_net_vectorized(m_input, weight, activation_choice):
+    result = np.dot(np.transpose(m_input), weight)
+
+    # https://peterroelants.github.io/posts/neural-network-implementation-part04/
+
+    for i in range(len(result)):
+        result[i] = activation_function(activation_choice, result[i])
+
+    return result
+
+
 class Neurons:
     net = 0
     sigma_back = 0
