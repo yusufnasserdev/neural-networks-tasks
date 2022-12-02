@@ -111,23 +111,15 @@ class Network:
             f_net = self.layers_array[0].forward(row)
             for i in range(1, len(self.layers_array)):
                 f_net = self.layers_array[i].forward(f_net)
-
                 if i == self.layers_num - 1:
-                    mx = -1 * sys.float_info.max
+                    mx = -1e10
                     idx = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
                             mx = f_net[j]
                             idx = j
-
                     actual = test['label'][count]
                     conf_matrix[actual][idx] += 1
-
-                    if idx == -1:
-                        print("idx didn't change")
-                        for k in range(len(f_net)):
-                            print(f_net[k])
-
                     if actual == idx:
                         cnt += 1
 

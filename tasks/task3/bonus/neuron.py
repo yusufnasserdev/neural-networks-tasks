@@ -6,7 +6,7 @@ def activation_function(activation_choice, result):
     if activation_choice == 1:
         return 1 / (1 + np.exp(-result))
     else:
-        return (1 - np.exp(-result)) / (1 + np.exp(-result))
+        return np.tanh(result)
 
 
 class Neurons:

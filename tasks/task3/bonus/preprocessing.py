@@ -5,7 +5,7 @@ def normalize(df):
     labels = df['label'].tolist()
     df = df.drop('label', axis=1)
     # Normalization
-    df = (df - df.mean()) / df.std()
+    df = df / 255
     df.insert(0, 'label', labels)
     return df
 
