@@ -1,8 +1,9 @@
 import numpy as np
 from task3.bonus.neuron import Neurons
+from neuron import calc_net_vectorized
 
 
-class Layer():
+class Layer:
 
     def __init__(self, neurons_current, neurons_before, check_bias, choice, is_last_layer):
         self.neurons_current = neurons_current
@@ -18,6 +19,9 @@ class Layer():
             m_input.append(1)
         else:
             m_input.append(0)
+
+        # f_net_current = calc_net_vectorized(m_input, np.transpose(self.weights_before), self.choice)
+
         for i in range(self.neurons_current):
             self.neurons_array[i].calc_net(m_input, self.weights_before[i, :], self.choice)
         f_net_current = list()
