@@ -79,18 +79,19 @@ class Network:
             f_net = self.layers_array[0].forward(row)
 
             # Iterate the layers
-
             for i in range(1, len(self.layers_array)):
                 f_net = self.layers_array[i].forward(f_net)
                 if i == self.layers_num - 1:
                     mx = -1 * sys.float_info.max
                     idx = -1
+
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
                             mx = f_net[j]
                             idx = j
 
                     actual = train['label'][count]
+
                     if actual == idx:
                         cnt += 1
         print("Training acc= ", cnt / len(train))
@@ -122,8 +123,14 @@ class Network:
                     actual = test['label'][count]
                     conf_matrix[actual][idx] += 1
 
+                    if idx == -1:
+                        print("idx didn't change")
+                        for k in range(len(f_net)):
+                            print(f_net[k])
+
                     if actual == idx:
                         cnt += 1
 
         acc = cnt / len(test)
+        print("Testing acc= ", cnt / len(test))
         return conf_matrix, classes, acc

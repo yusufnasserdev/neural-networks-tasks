@@ -64,33 +64,45 @@ class Network:
         for count in range(len(train)):
             # Row features
             row = train.iloc[count][1:].tolist()
+
             # Forward step
+
             # FNet first layer
             f_net = self.layers_array[0].forward(row)
+
             # Iterate the layers
             for i in range(1, len(self.layers_array)):
                 f_net = self.layers_array[i].forward(f_net)
                 if i == self.layers_num - 1:
                     mx = -1 * sys.float_info.max
                     idx = -1
+
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
                             mx = f_net[j]
                             idx = j
+
                     specie = self.classes.index(train['species'][count])
+
                     if specie == idx:
                         cnt += 1
+
         print("Training acc= ", cnt / len(train))
 
     def testing(self, test):
         cnt = 0
+
         conf_matrix = np.zeros([3, 3], dtype=int)
+
         for count in range(len(test)):
             row = test.iloc[count][1:].tolist()
+
             # Forward step
+
             f_net = self.layers_array[0].forward(row)
             for i in range(1, len(self.layers_array)):
                 f_net = self.layers_array[i].forward(f_net)
+
                 if i == self.layers_num - 1:
                     mx = -1 * sys.float_info.max
                     idx = -1
@@ -98,9 +110,13 @@ class Network:
                         if f_net[j] > mx:
                             mx = f_net[j]
                             idx = j
+
                     specie = self.classes.index(test['species'][count])
                     conf_matrix[specie][idx] += 1
+
                     if specie == idx:
                         cnt += 1
+
         acc = cnt / len(test)
+        print("Testing acc= ", cnt / len(test))
         return conf_matrix, self.classes, acc
