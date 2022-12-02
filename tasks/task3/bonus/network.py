@@ -14,33 +14,27 @@ class Network:
         # Hidden layers
         for i in range(len(neurons_num)):
             if i == 0:
-                self.layers_array.append(Layer(neurons_num[i], 784, bias, choice, False))
+                self.layers_array.append(Layer(neurons_num[i], 784, self.bias, self.choice, False))
             else:
-                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], bias, choice, False))
+                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], self.bias, self.choice, False))
 
         # Output layer
-        self.layers_array.append(Layer(10, neurons_num[-1], bias, choice, True))
+        self.layers_array.append(Layer(10, neurons_num[-1], self.bias, self.choice, True))
 
     def learning(self, train):
-
         # Iterate the epochs
         for i in range(self.epochs):
             print("Epoch: ", i + 1)
-
             # Iterate the train dataset
             for count in range(len(train)):
                 # Row features
                 row = train.iloc[count][1:].tolist()
-
                 # Forward step
-
                 # FNet first layer
                 f_net = self.layers_array[0].forward(row)
-
                 # Iterate the layers
                 for j in range(1, len(self.layers_array)):
                     f_net = self.layers_array[j].forward(f_net)
-
                 # Backward step
 
                 # One hot encoding to the actual output
@@ -69,6 +63,8 @@ class Network:
 
                 for j in range(1, len(self.layers_array)):
                     f_net = self.layers_array[j].update(f_net, self.rate)
+                    f_net.append(self.bias)
+
         cnt = 0
         for count in range(len(train)):
             # Row features

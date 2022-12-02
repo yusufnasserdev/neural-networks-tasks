@@ -17,6 +17,7 @@ class Network:
                 self.layers_array.append(Layer(neurons_num[i], 5, self.bias, self.choice, False))
             else:
                 self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], self.bias, self.choice, False))
+
         # Output layer
         self.layers_array.append(Layer(3, neurons_num[-1], self.bias, self.choice, True))
 
