@@ -20,10 +20,10 @@ class Layer:
             m_input.append(0)
         for i in range(self.neurons_current):
             self.neurons_array[i].calc_net(m_input, self.weights_before[i, :], self.choice)
-        arr = list()
+        f_net_current = list()
         for i in range(self.neurons_current):
-            arr.append(self.neurons_array[i].get_net())
-        return arr
+            f_net_current.append(self.neurons_array[i].get_net())
+        return f_net_current
 
     def backward(self, sigma_before, weights, target):
         for i in range(self.neurons_current):
@@ -31,17 +31,17 @@ class Layer:
                 self.neurons_array[i].calc_sigma_output_layer(target[i], self.choice)
             else:
                 self.neurons_array[i].calc_sigma(sigma_before, weights[:, i], self.choice)
-        arr = list()
+        sigma = list()
         for i in range(self.neurons_current):
-            arr.append(self.neurons_array[i].get_sigma())
-        return arr, self.weights_before
+            sigma.append(self.neurons_array[i].get_sigma())
+        return sigma, self.weights_before
 
     def update(self, m_input, rate):
         for i in range(self.neurons_current):
             for j in range(self.neurons_before+1):
                 self.weights_before[i][j] = self.weights_before[i][j] + (
                         rate * self.neurons_array[i].get_sigma() * m_input[j])
-        arr = list()
+        f_net_current = list()
         for i in range(self.neurons_current):
-            arr.append(self.neurons_array[i].get_net())
-        return arr
+            f_net_current.append(self.neurons_array[i].get_net())
+        return f_net_current
