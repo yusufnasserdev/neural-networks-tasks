@@ -5,23 +5,28 @@ from task3.layer import Layer
 
 
 class Network:
-    def __init__(self, rate, epochs, choice, bias, layers_num, neurons_num):
+    def __init__(self, rate, epochs, choice, bias, neurons_nums, labels, feat_no):
         self.rate = rate
         self.epochs = epochs
         self.choice = choice  # int
         self.bias = bias  # int
-        self.layers_num = layers_num + 1
+        self.layers_num = len(neurons_nums) + 1
+        self.labels = labels
+        self.labels_no = len(self.labels)
+        self.feat_no = feat_no
+
+        # Initializing the layers array
         self.layers_array = list()
-        self.classes = ['Adelie', 'Gentoo', 'Chinstrap']
+
         # Hidden layers
-        for i in range(len(neurons_num)):
+        for i in range(len(neurons_nums)):
             if i == 0:
-                self.layers_array.append(Layer(neurons_num[i], 5, self.bias, self.choice, False))
+                self.layers_array.append(Layer(neurons_nums[i], self.feat_no, self.bias, self.choice, False))
             else:
-                self.layers_array.append(Layer(neurons_num[i], neurons_num[i - 1], self.bias, self.choice, False))
+                self.layers_array.append(Layer(neurons_nums[i], neurons_nums[i - 1], self.bias, self.choice, False))
 
         # Output layer
-        self.layers_array.append(Layer(3, neurons_num[-1], self.bias, self.choice, True))
+        self.layers_array.append(Layer(self.labels_no, neurons_nums[-1], self.bias, self.choice, True))
 
     def learning(self, train):
         # Iterate the epochs
@@ -38,21 +43,29 @@ class Network:
                 for j in range(1, len(self.layers_array)):
                     f_net = self.layers_array[j].forward(f_net)
                 # Backward step
+
                 # One hot encoding to the actual output
                 target = list()
-                # Classes list
-                for x in self.classes:
-                    if train['species'][count] == x:
+
+                for x in range(self.labels_no):
+                    label = train.columns[0]
+                    target_index = self.labels.index(train[label][count])
+                    if target_index == x:
                         target.append(1)
                     else:
                         target.append(0)
+
                 # Reversing layers to execute the backpropagation
                 layers_reversed = self.layers_array[::-1]
+
                 # Last layer
                 sigma, weights = layers_reversed[0].backward(1, 1, target)
+
                 for j in range(1, len(layers_reversed)):
                     sigma, weights = layers_reversed[j].backward(sigma, weights, target)
+
                 # Update step
+
                 # First layer
                 f_net = self.layers_array[0].update(row, self.rate)
                 f_net.append(self.bias)
@@ -60,6 +73,8 @@ class Network:
                 for j in range(1, len(self.layers_array)):
                     f_net = self.layers_array[j].update(f_net, self.rate)
                     f_net.append(self.bias)
+
+        # Calculating training acc
         cnt = 0
         for count in range(len(train)):
             # Row features
@@ -82,7 +97,8 @@ class Network:
                             mx = f_net[j]
                             idx = j
 
-                    specie = self.classes.index(train['species'][count])
+                    label = train.columns[0]
+                    specie = self.labels.index(train[label][count])
 
                     if specie == idx:
                         cnt += 1
@@ -91,8 +107,7 @@ class Network:
 
     def testing(self, test):
         cnt = 0
-
-        conf_matrix = np.zeros([3, 3], dtype=int)
+        conf_matrix = np.zeros([self.labels_no, self.labels_no], dtype=int)
 
         for count in range(len(test)):
             row = test.iloc[count][1:].tolist()
@@ -105,18 +120,19 @@ class Network:
 
                 if i == self.layers_num - 1:
                     mx = -1 * sys.float_info.max
-                    idx = -1
+                    prediction = -1
                     for j in range(len(f_net)):
                         if f_net[j] > mx:
                             mx = f_net[j]
-                            idx = j
+                            prediction = j
 
-                    specie = self.classes.index(test['species'][count])
-                    conf_matrix[specie][idx] += 1
+                    label = test.columns[0]
+                    actual = self.labels.index(test[label][count])
+                    conf_matrix[actual][prediction] += 1
 
-                    if specie == idx:
+                    if prediction == actual:
                         cnt += 1
 
         acc = cnt / len(test)
         print("Testing acc= ", cnt / len(test))
-        return conf_matrix, self.classes, acc
+        return conf_matrix, self.labels, acc

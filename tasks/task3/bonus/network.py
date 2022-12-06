@@ -94,16 +94,15 @@ class Network:
 
                     if actual == idx:
                         cnt += 1
+
         print("Training acc= ", cnt / len(train))
 
     def testing(self, test):
         cnt = 0
 
-        classes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-
         conf_matrix = np.zeros([10, 10], dtype=int)
 
-        for count in range(0, len(test)):
+        for count in range(len(test)):
             row = test.iloc[count][1:].tolist()
 
             # Forward step
@@ -125,4 +124,4 @@ class Network:
 
         acc = cnt / len(test)
         print("Testing acc= ", cnt / len(test))
-        return conf_matrix, classes, acc
+        return conf_matrix, self.labels, acc

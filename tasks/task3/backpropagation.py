@@ -4,7 +4,7 @@ from task3.network import Network
 from gui.gui_output import show_output
 
 
-def run_backpropagation(layers, m_neurons, epochs, active, bias, rate):
+def run_backpropagation(m_neurons, epochs, active, bias, rate, labels, feat_no):
     df = prepare_data()
     train1, test1 = split("Adelie", df)
     train2, test2 = split("Gentoo", df)
@@ -18,7 +18,7 @@ def run_backpropagation(layers, m_neurons, epochs, active, bias, rate):
     testing_df = pd.concat(frames2)
     # to shuffle testing dataframe
     testing_df = testing_df.sample(frac=1, random_state=1, ignore_index=True)
-    network1 = Network(rate, epochs, active, bias, layers, m_neurons)
+    network1 = Network(rate, epochs, active, bias, m_neurons, labels, feat_no)
     network1.learning(training_df)
     mat, classes, acc = network1.testing(testing_df)
     show_output(mat, classes, acc)

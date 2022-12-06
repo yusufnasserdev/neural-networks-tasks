@@ -20,12 +20,11 @@ def calc_net_vectorized(m_input, weight, activation_choice):
     return result
 
 
-class Neurons:
+class Neuron:
     net = 0
     sigma_back = 0
 
     def calc_net(self, m_input, weight, activation_choice):
-        # try:
         result = np.dot(m_input, np.transpose(weight))
         self.net = activation_function(activation_choice, result)
 

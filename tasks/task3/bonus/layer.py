@@ -1,6 +1,5 @@
 import numpy as np
-from task3.bonus.neuron import Neurons
-
+from task3.bonus.neuron import Neuron
 
 
 class Layer:
@@ -10,7 +9,7 @@ class Layer:
         self.neurons_before = neurons_before
         self.weights_before = np.random.randn(self.neurons_current, (self.neurons_before + 1))
         self.check_bias = check_bias
-        self.neurons_array = [Neurons() for i in range(neurons_current)]
+        self.neurons_array = [Neuron() for i in range(neurons_current)]
         self.choice = choice
         self.is_last_layer = is_last_layer
 

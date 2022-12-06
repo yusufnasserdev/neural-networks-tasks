@@ -339,10 +339,11 @@ class GUI:
             elif self.task == 3 or self.task == 4:
                 layers = int(self.layers_no.get().strip())
                 neurons = self.neurons_no.get().strip().split(',')
+
                 for i in range(len(neurons)):
                     neurons[i] = int(neurons[i])
 
                 if self.task == 3:
-                    input_backpropagation(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                    input_backpropagation(neurons, epochs, self.active.get(), self.bs.get(), rate)
                 elif self.task == 4:
                     input_bonus(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)

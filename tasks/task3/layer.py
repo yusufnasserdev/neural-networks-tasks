@@ -1,5 +1,5 @@
 import numpy as np
-from task3.neuron import *
+from task3.neuron import Neuron
 
 
 class Layer:
@@ -9,7 +9,7 @@ class Layer:
         self.neurons_before = neurons_before
         self.weights_before = np.random.randn(self.neurons_current, (self.neurons_before + 1))
         self.check_bias = check_bias
-        self.neurons_array = [Neurons() for _ in range(neurons_current)]
+        self.neurons_array = [Neuron() for i in range(neurons_current)]
         self.choice = choice
         self.is_last_layer = is_last_layer
 
@@ -18,6 +18,9 @@ class Layer:
             m_input.append(1)
         else:
             m_input.append(0)
+
+        # f_net_current = calc_net_vectorized(m_input, np.transpose(self.weights_before), self.choice)
+
         for i in range(self.neurons_current):
             self.neurons_array[i].calc_net(m_input, self.weights_before[i, :], self.choice)
         f_net_current = list()
@@ -38,7 +41,7 @@ class Layer:
 
     def update(self, m_input, rate):
         for i in range(self.neurons_current):
-            for j in range(self.neurons_before+1):
+            for j in range(self.neurons_before + 1):
                 self.weights_before[i][j] = self.weights_before[i][j] + (
                         rate * self.neurons_array[i].get_sigma() * m_input[j])
         f_net_current = list()

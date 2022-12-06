@@ -9,7 +9,7 @@ def activation_function(activation_choice, result):
         return np.tanh(result)
 
 
-class Neurons:
+class Neuron:
     net = 0
     sigma_back = 0
 
