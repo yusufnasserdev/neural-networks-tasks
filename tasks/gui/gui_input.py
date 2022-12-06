@@ -346,4 +346,4 @@ class GUI:
                 if self.task == 3:
                     input_backpropagation(neurons, epochs, self.active.get(), self.bs.get(), rate)
                 elif self.task == 4:
-                    input_bonus(layers, neurons, epochs, self.active.get(), self.bs.get(), rate)
+                    input_bonus(neurons, epochs, self.active.get(), self.bs.get(), rate)

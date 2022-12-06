@@ -1,7 +1,7 @@
 from task1.perceptron import run_perceptron
 from task2.adaline import run_adaline
 from task3.backpropagation import run_backpropagation
-from task3.bonus.backpropagation import run_bonus_back
+from task3.backpropagation import run_bonus_back
 
 
 def input_perceptron(c1, c2, f1, f2, epochs, bs, rate):
@@ -17,6 +17,6 @@ def input_backpropagation(neurons, epochs, active, bias, rate):
     run_backpropagation(neurons, epochs, active, bias, rate, labels, 5)
 
 
-def input_bonus(layers, neurons, epochs, active, bias, rate):
+def input_bonus(neurons, epochs, active, bias, rate):
     labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    run_backpropagation(neurons, epochs, active, bias, rate, labels, 784)
+    run_bonus_back(neurons, epochs, active, bias, rate, labels, 784)

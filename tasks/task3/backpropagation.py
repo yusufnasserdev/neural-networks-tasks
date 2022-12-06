@@ -1,4 +1,4 @@
-from utils.preprocessing import prepare_data, split
+from utils.preprocessing import prepare_data, prepare_mnist_data, split
 import pandas as pd
 from task3.network import Network
 from gui.gui_output import show_output
@@ -22,3 +22,15 @@ def run_backpropagation(m_neurons, epochs, active, bias, rate, labels, feat_no):
     network1.learning(training_df)
     mat, classes, acc = network1.testing(testing_df)
     show_output(mat, classes, acc)
+
+
+def run_bonus_back(m_neurons, epochs, active, bias, rate, labels, feat_no):
+    train, test = prepare_mnist_data()
+    print(train.head())
+    train = train.iloc[:500, :]
+    test = test.iloc[:100, :]
+    network1 = Network(rate, epochs, active, bias, m_neurons, labels, feat_no)
+    network1.learning(train)
+    mat, classes, acc = network1.testing(test)
+    show_output(mat, classes, acc)
+    print(acc)
