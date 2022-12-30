@@ -214,4 +214,5 @@ fabric.properties
 keys.py
 
 # MNIST datasets
-
+tasks/datasets/mnist_test.csv
+tasks/datasets/mnist_train.csv
