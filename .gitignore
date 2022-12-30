@@ -212,3 +212,6 @@ fabric.properties
 
 # APIs
 keys.py
+
+# MNIST datasets
+
